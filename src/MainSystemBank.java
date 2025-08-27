@@ -16,6 +16,8 @@ public class MainSystemBank {
             System.out.println("=== BANCO DIGITAL ===");
             System.out.println("1 - CRIAR CLIENTE");
             System.out.println("2 - ATIVAR CONTA CLIENTE");
+            System.out.println("3 - LISTAR CLIENTES");
+            System.out.println("4 - LISTAR CONTAS CLIENTES");
             System.out.println("0 - Sair");
             System.out.println("===========================");
             option = scanner.nextInt();
@@ -23,6 +25,8 @@ public class MainSystemBank {
             switch (option){
                 case 1 -> createClient();
                 case 2 -> activatedAccount();
+                case 3 -> System.out.println(manager.listUsers());
+                case 4 -> System.out.println(manager.listAccounts());
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Scanner;
 
 public class Manager {
@@ -67,6 +68,45 @@ public class Manager {
         } else {
             return "Conta: " + client.getCpf() +  " - " + client.getName() + " - já está ativada!";
         }
+    }
+
+    // Method list users
+    public String listUsers() {
+        if (MainSystemBank.clients.isEmpty()) {
+            return "Nenhum cliente cadastrado.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== Lista de Clientes =====\n");
+
+        for (Client c : MainSystemBank.clients) {
+            sb.append("Nome: ").append(c.getName()).append("\n")
+                    .append("CPF: ").append(c.getCpf()).append("\n")
+                    .append("Data de Nascimento: ").append(c.getDateOfBirth()).append("\n")
+                    .append("Endereço: ").append(c.getAddress()).append("\n")
+                    .append("---------------------------\n");
+        }
+
+        return sb.toString();
+    }
+
+    // Method list account
+    public String listAccounts() {
+        if (MainSystemBank.clients.isEmpty()) {
+            return "Nenhum cliente cadastrado.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== LISTA DE CONTAS =====\n");
+
+        for (Client c : MainSystemBank.clients) {
+            sb.append("Nome: ").append(c.getName()).append("\n")
+                    .append("CPF: ").append(c.getCpf()).append("\n")
+                    .append("Conta ativa: ").append(c.isAccount() ? "Sim" : "Não").append("\n")
+                    .append("---------------------------\n");
+        }
+
+        return sb.toString();
     }
 
     // Method search customer by CPF
