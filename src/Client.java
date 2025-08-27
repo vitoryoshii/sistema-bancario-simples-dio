@@ -37,6 +37,10 @@ public class Client extends User {
         return account;
     }
 
+    public void setAccount(boolean account) {
+        this.account = account;
+    }
+
     // customer interaction methods
 
 }

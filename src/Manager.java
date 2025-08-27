@@ -30,7 +30,7 @@ public class Manager {
         Scanner scanner = new Scanner(System.in);
 
         // Capture customer information so you can create
-        System.out.println("Cadastrar Cliente");
+        System.out.println("CADASTRO DE CLIENTE");
 
         // Requests customer data, verifies if it is correct, if not, validates the operations
         do {
@@ -57,4 +57,25 @@ public class Manager {
     }
 
     // Method to assign an account
+    public String activatedAccount(Client client) {
+        System.out.println("ATIVANDO CONTA CLIENTE");
+
+
+        if (!client.isAccount()) {
+            client.setAccount(true);
+            return "Conta: " + client.getCpf() + " - " + client.getName() + " - ativada com sucesso!";
+        } else {
+            return "Conta: " + client.getCpf() +  " - " + client.getName() + " - já está ativada!";
+        }
+    }
+
+    // Method search customer by CPF
+    public Client searchCustomerByCPF(String cpf) {
+        for (Client c : MainSystemBank.clients) {
+            if (c.getCpf().equals(cpf)) {
+                return c; // return client found
+            }
+        }
+        return null; // return null
+    }
 }
