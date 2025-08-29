@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+package models;
 
 public class User {
 
@@ -8,6 +6,4 @@ public class User {
     private String cpf;
     private String dateOfBirth;
     private String address;
-
-    List<User> users = new ArrayList<>();
 }

@@ -33,11 +33,11 @@ Projeto simples que simula uma conta bancária com funcionalidades básicas, inc
    ```
 2. 🛠️ Compile as classes:
    ```bash
-    javac Client.java BankAccount.java MainSystemBank.java
+    javac models.Client.java BankAccount.java main.MainSystemBank.java
    ```
 3. ▶️ Execute o programa:
    ```bash
-    java MainSystemBank
+    java main.MainSystemBank
    ```
    
 ---

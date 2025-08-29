@@ -1,6 +1,8 @@
+package models;
+
 public class Client extends User {
 
-    // Variables to control the Client's internal methods
+    // Variables to control the models.Client's internal methods
     private String name;
     private final String cpf;
     private String dateOfBirth;
