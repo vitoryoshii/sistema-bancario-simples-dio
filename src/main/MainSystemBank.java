@@ -14,7 +14,6 @@ public class MainSystemBank {
     private static List<Manager> managers = new ArrayList<>();
 
     private static UtilServices util = new UtilServices();
-
     private static Scanner scanner =  new Scanner(System.in);
 
     // Method access lists Client or Managers
@@ -29,12 +28,11 @@ public class MainSystemBank {
     // Main start of the entire system
     static void main(String[] args) {
         scanner.useDelimiter("\\n");
-
-        mainMenu(clients, managers);
+        mainMenu();
     }
 
     // Method to access menu
-    public static void mainMenu(List<Client> clients, List<Manager> managers) {
+    public static void mainMenu() {
 
         do {
             System.out.println("=== BANCO DIGITAL ===");
@@ -44,14 +42,14 @@ public class MainSystemBank {
             System.out.println("===========================");
             System.out.print("OPÇÃO: ");
 
-            int option = MainSystemBank.scanner.nextInt();
+            int option = scanner.nextInt();
 
             switch (option){
                 case 1 -> {
                     String cpf;
                     do {
                         System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
-                        cpf = MainSystemBank.scanner.next();
+                        cpf = scanner.next();
 
                         if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
                             System.out.println("CPF inválido! Digite novamente no formato 000.000.000-00.");
@@ -72,7 +70,7 @@ public class MainSystemBank {
                     String cpf;
                     do {
                         System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
-                        cpf = MainSystemBank.scanner.next();
+                        cpf = scanner.next();
 
                         if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
                             System.out.println("CPF inválido! Digite novamente no formato 000.000.000-00.");
@@ -83,11 +81,12 @@ public class MainSystemBank {
 
                     Manager managerSearch = util.searchManagerByCPF(cpf);
 
-                    Manager manager = new Manager();
                     if (managerSearch == null) {
                         System.out.println("CPF não cadastrado!");
-                        Manager newManager = manager.createManager();
-                        managers.add(newManager);
+
+                        Manager manager = new Manager();
+                        Manager newManager = manager.createManager(cpf);
+                        MainSystemBank.getManagers().add(newManager);
 
                         System.out.println("CADASTRO realizado com sucesso!");
                     } else {
@@ -104,7 +103,9 @@ public class MainSystemBank {
                         }
                     }
                 }
-                case 0 -> System.exit(0);
+                case 0 -> {
+                    return;
+                }
                 default -> System.out.println("Opção inválida");
             }
         }   while (true);
@@ -125,13 +126,29 @@ public class MainSystemBank {
 
             switch (option) {
                 case 1 -> {
+                    System.out.print("Valor do Saque: ");
+                    double value = scanner.nextDouble();
 
+                    if (client.getAccount() == false){
+                        System.out.println("Não será possivél continuar. Conta não ativa!");
+                    } else {
+                        String stringReturn = client.withdraw(value);
+                        System.out.println(stringReturn);
+                    }
                 }
                 case 2 -> {
-                    break;
+                    System.out.print("Valor do Deposito: ");
+                    double value = scanner.nextDouble();
+
+                    if  (client.getAccount() == false){
+                        System.out.println("Não será possivél continuar. Conta não ativa!");
+                    } else {
+                        String stringReturn = client.deposit(value);
+                        System.out.println(stringReturn);
+                    }
                 }
                 case 3 -> {
-                    break;
+                    System.out.println(client.showExtract());
                 }
                 case 0 -> System.out.println("Voltando...");
                 default -> System.out.println("Opção inválida");
@@ -151,17 +168,17 @@ public class MainSystemBank {
             System.out.println("===========================");
             System.out.print("OPÇÃO: ");
 
-            option = MainSystemBank.scanner.nextInt();
+            option = scanner.nextInt();
 
             switch (option){
                 case 1 -> {
                     Client newClient = manager.createClient();
                     clients.add(newClient);
                     System.out.println("Criando Cliente...");
-                    System.out.println(STR."Cliente: \{newClient.getName()} - CPF: \{newClient.getCpf()}");
+                    System.out.println(STR."Cliente: \{newClient.getName()} - CPF: \{newClient.getCpf()}\n");
                 }
                 case 2 -> {
-                    System.out.println("DIGITE O CPF DO CLIENTE: ");
+                    System.out.print("DIGITE O CPF DO CLIENTE: ");
                     String cpf = scanner.next();
 
                     Client client = util.searchCustomerByCPF(cpf);
