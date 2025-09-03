@@ -2,28 +2,14 @@ package main;
 
 import models.Client;
 import models.Manager;
-import util.UtilServices;
+import util.BankRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class MainSystemBank {
-    // Global control variables
-    private static List<Client> clients = new ArrayList<>();
-    private static List<Manager> managers = new ArrayList<>();
 
-    private static UtilServices util = new UtilServices();
+    private static BankRepository bankRepository = new BankRepository();
     private static Scanner scanner =  new Scanner(System.in);
-
-    // Method access lists Client or Managers
-    public static List<Client> getClients() {
-        return clients;
-    }
-
-    public static List<Manager> getManagers() {
-        return managers;
-    }
 
     // Main start of the entire system
     static void main(String[] args) {
@@ -58,7 +44,7 @@ public class MainSystemBank {
 
                     } while (cpf == null);
 
-                    Client clientSearch = util.searchCustomerByCPF(cpf);
+                    Client clientSearch = bankRepository.searchCustomerByCPF(cpf);
 
                     if (clientSearch == null) {
                         System.out.println("CPF não cadastrado! Deve ser criado o cliente através do gerente.");
@@ -79,14 +65,14 @@ public class MainSystemBank {
 
                     } while (cpf == null);
 
-                    Manager managerSearch = util.searchManagerByCPF(cpf);
+                    Manager managerSearch = bankRepository.searchManagerByCPF(cpf);
 
                     if (managerSearch == null) {
                         System.out.println("CPF não cadastrado!");
 
                         Manager manager = new Manager();
                         Manager newManager = manager.createManager(cpf);
-                        MainSystemBank.getManagers().add(newManager);
+                        bankRepository.addManager(newManager);
 
                         System.out.println("CADASTRO realizado com sucesso!");
                     } else {
@@ -173,7 +159,7 @@ public class MainSystemBank {
             switch (option){
                 case 1 -> {
                     Client newClient = manager.createClient();
-                    clients.add(newClient);
+                    bankRepository.addClient(newClient);
                     System.out.println("Criando Cliente...");
                     System.out.println(STR."Cliente: \{newClient.getName()} - CPF: \{newClient.getCpf()}\n");
                 }
@@ -181,7 +167,7 @@ public class MainSystemBank {
                     System.out.print("DIGITE O CPF DO CLIENTE: ");
                     String cpf = scanner.next();
 
-                    Client client = util.searchCustomerByCPF(cpf);
+                    Client client = bankRepository.searchCustomerByCPF(cpf);
 
                     if (client == null){
                         System.out.println("CPF NÃO CADASTRADO. CADASTRE UM CLIENTE!");
@@ -189,8 +175,8 @@ public class MainSystemBank {
                         System.out.println(manager.activatedAccount(client));
                     }
                 }
-                case 3 -> System.out.println(manager.listUsers());
-                case 4 -> System.out.println(manager.listAccounts());
+                case 3 -> System.out.println(manager.listUsers(bankRepository.getClients()));
+                case 4 -> System.out.println(manager.listAccounts(bankRepository.getClients()));
                 case 0 -> System.out.println("Voltando...");
                 default -> System.out.println("Opção inválida");
             }

@@ -1,7 +1,6 @@
 package models;
 
-import main.MainSystemBank;
-
+import java.util.List;
 import java.util.Scanner;
 
 public class Manager {
@@ -87,15 +86,15 @@ public class Manager {
     }
 
     // Method list users
-    public String listUsers() {
-        if (MainSystemBank.getClients().isEmpty()) {
+    public String listUsers(List<Client> clients) {
+        if (clients.isEmpty()) {
             return "Nenhum cliente cadastrado.";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("===== Lista de Clientes =====\n");
 
-        for (Client c : MainSystemBank.getClients()) {
+        for (Client c : clients) {
             sb.append("Nome: ").append(c.getName()).append("\n")
                     .append("CPF: ").append(c.getCpf()).append("\n")
                     .append("Data de Nascimento: ").append(c.getDateOfBirth()).append("\n")
@@ -107,15 +106,15 @@ public class Manager {
     }
 
     // Method list account
-    public String listAccounts() {
-        if (MainSystemBank.getClients().isEmpty()) {
+    public String listAccounts(List<Client> clients) {
+        if (clients.isEmpty()) {
             return "Nenhuma conta cadastrada.";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("===== LISTA DE CONTAS =====\n");
 
-        for (Client c : MainSystemBank.getClients()) {
+        for (Client c : clients) {
             sb.append("Nome: ").append(c.getName()).append("\n")
                     .append("CPF: ").append(c.getCpf()).append("\n")
                     .append("Conta ativa: ").append(c.getAccount() ? "Sim" : "Não").append("\n")
