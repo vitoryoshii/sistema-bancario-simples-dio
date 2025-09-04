@@ -3,6 +3,7 @@ package main;
 import models.Client;
 import models.Manager;
 import util.BankRepository;
+import util.ValidationUtils;
 
 import java.util.Scanner;
 
@@ -36,12 +37,10 @@ public class MainSystemBank {
                     do {
                         System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
                         cpf = scanner.next();
-
-                        if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
-                            System.out.println("CPF inválido! Digite novamente no formato 000.000.000-00.");
+                        if (!ValidationUtils.isValidCPF(cpf)) {
+                            System.out.println("CPF inválido! Digite um CPF válido.");
                             cpf = null;
                         }
-
                     } while (cpf == null);
 
                     Client clientSearch = bankRepository.searchCustomerByCPF(cpf);
@@ -57,12 +56,10 @@ public class MainSystemBank {
                     do {
                         System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
                         cpf = scanner.next();
-
-                        if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
-                            System.out.println("CPF inválido! Digite novamente no formato 000.000.000-00.");
+                        if (!ValidationUtils.isValidCPF(cpf)) {
+                            System.out.println("CPF inválido! Digite um CPF válido.");
                             cpf = null;
                         }
-
                     } while (cpf == null);
 
                     Manager managerSearch = bankRepository.searchManagerByCPF(cpf);
