@@ -3,6 +3,8 @@ package models;
 import java.util.List;
 import java.util.Scanner;
 
+import util.ValidationUtils;
+
 public class Manager {
     private Scanner scanner =  new Scanner(System.in);
 
@@ -53,22 +55,34 @@ public class Manager {
         do {
             System.out.print("Digite seu nome: ");
             name = scanner.nextLine();
-        } while (!name.matches("[a-zA-Z ]+"));
+            if (!ValidationUtils.isValidName(name)) {
+                System.out.println("Nome inválido! Use apenas letras e espaços.");
+            }
+        } while (!ValidationUtils.isValidName(name));
 
         do {
             System.out.print("Digite seu cpf (000.000.000-00): ");
             cpf = scanner.nextLine();
-        } while (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}"));
+            if (!ValidationUtils.isValidCPF(cpf)) {
+                System.out.println("CPF inválido! Digite um CPF valido.");
+            }
+        } while (!ValidationUtils.isValidCPF(cpf));
 
         do {
             System.out.print("Digite seu data de nascimento (00-00-0000): ");
             dateOfBirth = scanner.nextLine();
-        }while (!dateOfBirth.matches("\\d{2}\\-\\d{2}\\-\\d{4}"));
+            if (!ValidationUtils.isValidDate(dateOfBirth)) {
+                System.out.println("Data de nacimento inválida! Digite no formato dd-MM-yyyy");
+            }
+        }while (!ValidationUtils.isValidDate(dateOfBirth));
 
         do {
             System.out.print("Digite seu endereço: ");
             address = scanner.nextLine();
-        } while (!address.matches("[a-zA-ZÀ-ÿ0-9 .,-º]+"));
+            if (!ValidationUtils.isValidAddress(address)) {
+                System.out.println("Endereço inválido! Digite novamente.");
+            }
+        } while (!ValidationUtils.isValidAddress(address));
 
         return new Client(name, cpf, dateOfBirth, address);
     }
@@ -132,22 +146,34 @@ public class Manager {
         do {
             System.out.print("Digite seu nome: ");
             name = scanner.nextLine();
-        } while (!name.matches("[a-zA-Z ]+"));
+            if (!ValidationUtils.isValidName(name)) {
+                System.out.println("Nome inválido! Use apenas letras e espaços.");
+            }
+        } while (!ValidationUtils.isValidName(name));
 
         do {
             System.out.print("Digite seu data de nascimento (00-00-0000): ");
             dateOfBirth = scanner.nextLine();
-        }while (!dateOfBirth.matches("\\d{2}\\-\\d{2}\\-\\d{4}"));
+            if (!ValidationUtils.isValidDate(dateOfBirth)) {
+                System.out.println("Data de nacimento inválida! Digite no formato dd-MM-yyyy");
+            }
+        } while (!ValidationUtils.isValidDate(dateOfBirth));
 
         do {
             System.out.print("Digite seu endereço: ");
             address = scanner.nextLine();
-        } while (!address.matches("[a-zA-ZÀ-ÿ0-9 .,-º]+"));
+            if (!ValidationUtils.isValidAddress(address)) {
+                System.out.println("Endereço inválido! Digite novamente.");
+            }
+        } while (!ValidationUtils.isValidAddress(address));
 
         do {
             System.out.print("Digite seu usuário (usuario.demonstrativo): ");
             user = scanner.nextLine();
-        } while (!user.matches("^[a-zA-Z]+\\.[a-zA-Z]+$"));
+            if (!ValidationUtils.isValidUser(user)) {
+                System.out.println("Usuário inválido! Digite novamente.");
+            }
+        } while (!ValidationUtils.isValidUser(user));
 
         do {
             System.out.print("Digite seu password: ");
