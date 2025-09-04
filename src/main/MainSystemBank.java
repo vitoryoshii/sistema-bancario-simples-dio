@@ -13,7 +13,7 @@ public class MainSystemBank {
     private static Scanner scanner =  new Scanner(System.in);
 
     // Main start of the entire system
-    static void main(String[] args) {
+    public static void main(String[] args) {
         scanner.useDelimiter("\\n");
         mainMenu();
     }
@@ -97,7 +97,7 @@ public class MainSystemBank {
     public static void clientMenu(Client client) {
         int option;
         do {
-            System.out.println(STR."=== ACESSO CLIENTE - \{client.getName()} ===");
+            System.out.println("=== ACESSO CLIENTE - " + client.getName() + " ===");
             System.out.println("1 - SAQUE");
             System.out.println("2 - DEPOSITO");
             System.out.println("3 - EXTRATO");
@@ -142,7 +142,7 @@ public class MainSystemBank {
     public static void managerMenu(Manager manager) {
         int option;
         do {
-            System.out.println(STR."=== ACESSO GERENTE - \{manager.getUser()} ===");
+            System.out.println("=== ACESSO GERENTE - " + manager.getUser() + " ===");
             System.out.println("1 - CRIAR CLIENTE");
             System.out.println("2 - ATIVAR CONTA CLIENTE");
             System.out.println("3 - LISTAR CLIENTES");
@@ -158,7 +158,7 @@ public class MainSystemBank {
                     Client newClient = manager.createClient();
                     bankRepository.addClient(newClient);
                     System.out.println("Criando Cliente...");
-                    System.out.println(STR."Cliente: \{newClient.getName()} - CPF: \{newClient.getCpf()}\n");
+                    System.out.println("Cliente: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
                 }
                 case 2 -> {
                     System.out.print("DIGITE O CPF DO CLIENTE: ");

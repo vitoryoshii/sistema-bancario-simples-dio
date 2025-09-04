@@ -57,8 +57,8 @@ public class Client extends User {
         if (value >= balance) {return "Saldo insuficiente!";}
         else {
             balance = balance - value;
-            extract.add(STR."SAQUE: R$ \{value}");
-            return STR."Saque no valor de: R$ \{value} realizado! - SALDO: R$ \{balance}\n";
+            extract.add("SAQUE - R$ " + value);
+            return "Saque no valor de: R$ " + value + " realizado! - SALDO: R$ " + balance + "\n";
         }
     }
 
@@ -66,8 +66,8 @@ public class Client extends User {
         if (value < 0) {return "Valor negativo.";}
         else {
             balance = balance + value;
-            extract.add(STR."DEPOSITO: R$ \{value}");
-            return STR."Deposito no valor de: R$ \{value} realizado! - SALDO: R$ \{balance}\n";
+            extract.add("DEPOSITO - R$ " + value);
+            return "Deposito no valor de: R$ " + value + " realizado! - SALDO: R$ " + balance + "\n";
         }
     }
 
@@ -79,7 +79,7 @@ public class Client extends User {
         for (String line : extract) {
             sb.append(line).append("\n");
         }
-        sb.append("Saldo atual: R$ ").append(balance).append("\n");
+        sb.append("Saldo atual - R$ ").append(balance).append("\n");
         return sb.toString();
     }
 

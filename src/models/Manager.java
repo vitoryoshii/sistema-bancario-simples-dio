@@ -93,9 +93,9 @@ public class Manager {
 
         if (!client.getAccount()) {
             client.setAccount(true);
-            return STR."Conta: \{client.getCpf()} - \{client.getName()} - ativada com sucesso!\n";
+            return "Conta: " + client.getCpf() + " - " + client.getName() + " - ativada com sucesso!\n";
         } else {
-            return STR."Conta: \{client.getCpf()} - \{client.getName()} - já está ativada!\n";
+            return "Conta: " + client.getCpf() + " - " + client.getName() + " - já está ativada!\n";
         }
     }
 
