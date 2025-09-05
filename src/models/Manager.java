@@ -53,34 +53,34 @@ public class Manager {
 
         // Requests customer data, verifies if it is correct, if not, validates the operations
         do {
-            System.out.print("Digite seu nome: ");
+            System.out.print("DIGITE SEU NOME: ");
             name = scanner.nextLine();
             if (!ValidationUtils.isValidName(name)) {
-                System.out.println("Nome inválido! Use apenas letras e espaços.");
+                System.out.println("[ERRO] - NOME INVÁLIDO! APENAS LETRAS E ESPAÇOS.");
             }
         } while (!ValidationUtils.isValidName(name));
 
         do {
-            System.out.print("Digite seu cpf (000.000.000-00): ");
+            System.out.print("DIGITE O CPF (000.000.000-00): ");
             cpf = scanner.nextLine();
             if (!ValidationUtils.isValidCPF(cpf)) {
-                System.out.println("CPF inválido! Digite um CPF valido.");
+                System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.");
             }
         } while (!ValidationUtils.isValidCPF(cpf));
 
         do {
-            System.out.print("Digite seu data de nascimento (00-00-0000): ");
+            System.out.print("DIGITE SUA DATA DE NASCIMENTO (DD-MM-YYYY): ");
             dateOfBirth = scanner.nextLine();
             if (!ValidationUtils.isValidDate(dateOfBirth)) {
-                System.out.println("Data de nacimento inválida! Digite no formato dd-MM-yyyy");
+                System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE");
             }
         }while (!ValidationUtils.isValidDate(dateOfBirth));
 
         do {
-            System.out.print("Digite seu endereço: ");
+            System.out.print("DIGITE SEU ENDEREÇO: ");
             address = scanner.nextLine();
             if (!ValidationUtils.isValidAddress(address)) {
-                System.out.println("Endereço inválido! Digite novamente.");
+                System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
             }
         } while (!ValidationUtils.isValidAddress(address));
 
@@ -93,26 +93,26 @@ public class Manager {
 
         if (!client.getAccount()) {
             client.setAccount(true);
-            return "Conta: " + client.getCpf() + " - " + client.getName() + " - ativada com sucesso!\n";
+            return "[SUCESSO] - CONTA: " + client.getCpf() + " - " + client.getName() + " - ATIVADA!\n";
         } else {
-            return "Conta: " + client.getCpf() + " - " + client.getName() + " - já está ativada!\n";
+            return "[ERRO] - CONTA: " + client.getCpf() + " - " + client.getName() + " - CONTA JÁ ATIVA!\n";
         }
     }
 
     // Method list users
     public String listUsers(List<Client> clients) {
         if (clients.isEmpty()) {
-            return "Nenhum cliente cadastrado.";
+            return "NENHUM CLIENTE NA LISTA\n";
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("===== Lista de Clientes =====\n");
+        sb.append("===== LISTA DE CLIENTE =====\n");
 
         for (Client c : clients) {
-            sb.append("Nome: ").append(c.getName()).append("\n")
+            sb.append("NOME: ").append(c.getName()).append("\n")
                     .append("CPF: ").append(c.getCpf()).append("\n")
-                    .append("Data de Nascimento: ").append(c.getDateOfBirth()).append("\n")
-                    .append("Endereço: ").append(c.getAddress()).append("\n")
+                    .append("DATA DE NASCIMENTO: ").append(c.getDateOfBirth()).append("\n")
+                    .append("ENDEREÇO: ").append(c.getAddress()).append("\n")
                     .append("---------------------------\n");
         }
 
@@ -122,16 +122,17 @@ public class Manager {
     // Method list account
     public String listAccounts(List<Client> clients) {
         if (clients.isEmpty()) {
-            return "Nenhuma conta cadastrada.";
+            return "NENHUMA CONTA NA LISTA.";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("===== LISTA DE CONTAS =====\n");
 
         for (Client c : clients) {
-            sb.append("Nome: ").append(c.getName()).append("\n")
+            sb.append("NOME: ").append(c.getName()).append("\n")
                     .append("CPF: ").append(c.getCpf()).append("\n")
-                    .append("Conta ativa: ").append(c.getAccount() ? "Sim" : "Não").append("\n")
+                    .append("CONTA ATIVA: ").append(c.getAccount() ? "SIM" : "NÃO").append("\n")
+                    .append("SALDO DA CONTA: ").append(c.getBalance()).append("\n")
                     .append("---------------------------\n");
         }
 
@@ -144,39 +145,39 @@ public class Manager {
 
         // Requests customer data, verifies if it is correct, if not, validates the operations
         do {
-            System.out.print("Digite seu nome: ");
+            System.out.print("DIGITE SEU NOME: ");
             name = scanner.nextLine();
             if (!ValidationUtils.isValidName(name)) {
-                System.out.println("Nome inválido! Use apenas letras e espaços.");
+                System.out.println("[ERRO] - NOME INVÁLIDO! APENAS LETRAS E ESPAÇOS.");
             }
         } while (!ValidationUtils.isValidName(name));
 
         do {
-            System.out.print("Digite seu data de nascimento (00-00-0000): ");
+            System.out.print("DIGITE SUA DATA DE NASCIMENTO (DD-MM-YYYY): ");
             dateOfBirth = scanner.nextLine();
             if (!ValidationUtils.isValidDate(dateOfBirth)) {
-                System.out.println("Data de nacimento inválida! Digite no formato dd-MM-yyyy");
+                System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE.");
             }
         } while (!ValidationUtils.isValidDate(dateOfBirth));
 
         do {
-            System.out.print("Digite seu endereço: ");
+            System.out.print("DIGITE SEU ENDERECO: ");
             address = scanner.nextLine();
             if (!ValidationUtils.isValidAddress(address)) {
-                System.out.println("Endereço inválido! Digite novamente.");
+                System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
             }
         } while (!ValidationUtils.isValidAddress(address));
 
         do {
-            System.out.print("Digite seu usuário (usuario.demonstrativo): ");
+            System.out.print("DIGITE SEU USUÁRIO (USER.DEMOSTRATIVO): ");
             user = scanner.nextLine();
             if (!ValidationUtils.isValidUser(user)) {
-                System.out.println("Usuário inválido! Digite novamente.");
+                System.out.println("[ERRO] - USUÁRIO INVÁLIDO! DIGITE NOVAMENTE.");
             }
         } while (!ValidationUtils.isValidUser(user));
 
         do {
-            System.out.print("Digite seu password: ");
+            System.out.print("DIGITE SUA SENHA: ");
             password = scanner.nextLine();
         } while (!password.matches("^[a-zA-Z]+$"));
 

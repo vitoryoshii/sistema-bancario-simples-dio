@@ -46,6 +46,8 @@ public class Client extends User {
         return account;
     }
 
+    public double getBalance() {return balance;}
+
     public void setAccount(boolean account) {
         this.account = account;
     }
@@ -53,33 +55,33 @@ public class Client extends User {
     // customer interaction methods
     // Withdraw method
     public String withdraw(double value) {
-        if (value < 0) {return "Valor negativo.";}
-        if (value >= balance) {return "Saldo insuficiente!";}
+        if (value < 0) {return "[ERRO] - VALOR NEGATIVO!";}
+        if (value >= balance) {return "[ERRO] - SALDO INSUFICIENTE!";}
         else {
             balance = balance - value;
             extract.add("SAQUE - R$ " + value);
-            return "Saque no valor de: R$ " + value + " realizado! - SALDO: R$ " + balance + "\n";
+            return "[SUCESSO] - SAQUE DE:  R$ " + value + " REALIZADO! - SALDO: R$ " + balance + "\n";
         }
     }
 
     public String deposit(double value) {
-        if (value < 0) {return "Valor negativo.";}
+        if (value < 0) {return "[ERRO] - VALOR NEGATIVO!";}
         else {
             balance = balance + value;
             extract.add("DEPOSITO - R$ " + value);
-            return "Deposito no valor de: R$ " + value + " realizado! - SALDO: R$ " + balance + "\n";
+            return "[SUCESSO] - DEPOSITO DE: R$ " + value + " REALIZADO! - SALDO: R$ " + balance + "\n";
         }
     }
 
     public String showExtract() {
         if (extract.isEmpty()) {
-            return "Nenhuma movimentação encontrada.";
+            return "SEM MOVIMENTAÇÃO.";
         }
         StringBuilder sb = new StringBuilder("=== EXTRATO ===\n");
         for (String line : extract) {
             sb.append(line).append("\n");
         }
-        sb.append("Saldo atual - R$ ").append(balance).append("\n");
+        sb.append("SALDO ATUAL - R$ ").append(balance).append("\n");
         return sb.toString();
     }
 

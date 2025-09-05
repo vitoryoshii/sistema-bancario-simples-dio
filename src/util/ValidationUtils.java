@@ -26,6 +26,7 @@ public class ValidationUtils {
             int mod = 11 - (sum % 11);
             int digit1 = (mod == 10 || mod == 11) ? 0 : mod;
             if (digit1 != Integer.parseInt(cpf.substring(9, 10))) return false;
+
             sum = 0;
             weight = 11;
             for (int i = 0; i < 10; i++) {
