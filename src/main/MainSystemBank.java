@@ -26,7 +26,7 @@ public class MainSystemBank {
             System.out.println("1 - ACESSO CLIENTE");
             System.out.println("2 - ACESSO GERENTE");
             System.out.println("0 - SAIR");
-            System.out.println("===========================");
+            System.out.println("=========================");
             System.out.print("OPÇÃO: ");
 
             int option = scanner.nextInt();
@@ -35,10 +35,10 @@ public class MainSystemBank {
                 case 1 -> {
                     String cpf;
                     do {
-                        System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
+                        System.out.print("DIGITE O CPF (000.000.000-00): ");
                         cpf = scanner.next();
                         if (!ValidationUtils.isValidCPF(cpf)) {
-                            System.out.println("CPF inválido! Digite um CPF válido.");
+                            System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.\n");
                             cpf = null;
                         }
                     } while (cpf == null);
@@ -46,7 +46,7 @@ public class MainSystemBank {
                     Client clientSearch = bankRepository.searchCustomerByCPF(cpf);
 
                     if (clientSearch == null) {
-                        System.out.println("CPF não cadastrado! Deve ser criado o cliente através do gerente.");
+                        System.out.println("[ERRO] - CPF NÃO CADASTRADO! O GERENTE DEVE CRIAR O CADASTRO.\n");
                     } else {
                         clientMenu(clientSearch);
                     }
@@ -54,10 +54,10 @@ public class MainSystemBank {
                 case 2 -> {
                     String cpf;
                     do {
-                        System.out.print("Digite o CPF para continuar (formato: 000.000.000-00): ");
+                        System.out.print("DIGITE O CPF (000.000.000-00): ");
                         cpf = scanner.next();
                         if (!ValidationUtils.isValidCPF(cpf)) {
-                            System.out.println("CPF inválido! Digite um CPF válido.");
+                            System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.\n");
                             cpf = null;
                         }
                     } while (cpf == null);
@@ -65,31 +65,31 @@ public class MainSystemBank {
                     Manager managerSearch = bankRepository.searchManagerByCPF(cpf);
 
                     if (managerSearch == null) {
-                        System.out.println("CPF não cadastrado!");
+                        System.out.println("[ERRO] - CPF NÃO CADASTRADO!\n");
 
                         Manager manager = new Manager();
                         Manager newManager = manager.createManager(cpf);
                         bankRepository.addManager(newManager);
 
-                        System.out.println("CADASTRO realizado com sucesso!");
+                        System.out.println("[SUCESSO] - CADASTRO REALIZADO!\n");
                     } else {
-                        System.out.print("Digite usuário: ");
+                        System.out.print("DIGITE O USUÁRIO: ");
                         String user = MainSystemBank.scanner.next();
-                        System.out.print("Digite a senha: ");
+                        System.out.print("DIGITE A SENHA: ");
                         String password = MainSystemBank.scanner.next();
 
                         if (managerSearch.getUser().equals(user) && managerSearch.getPassword().equals(password)) {
-                            System.out.println("Login realizado com sucesso!");
+                            System.out.println("[SUCESSO] - LOGIN REALIZADO!\n");
                             managerMenu(managerSearch);
                         } else {
-                            System.out.println("Usuário ou senha incorretos!");
+                            System.out.println("[ERRO] - USUÁRIO OU SENHA INCORRETA!\n");
                         }
                     }
                 }
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("Opção inválida");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
             }
         }   while (true);
     }
@@ -109,22 +109,22 @@ public class MainSystemBank {
 
             switch (option) {
                 case 1 -> {
-                    System.out.print("Valor do Saque: ");
+                    System.out.print("VALOR DO SAQUE: ");
                     double value = scanner.nextDouble();
 
                     if (client.getAccount() == false){
-                        System.out.println("Não será possivél continuar. Conta não ativa!");
+                        System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.withdraw(value);
                         System.out.println(stringReturn);
                     }
                 }
                 case 2 -> {
-                    System.out.print("Valor do Deposito: ");
+                    System.out.print("VALOR DEPOSITO: ");
                     double value = scanner.nextDouble();
 
                     if  (client.getAccount() == false){
-                        System.out.println("Não será possivél continuar. Conta não ativa!");
+                        System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.deposit(value);
                         System.out.println(stringReturn);
@@ -133,8 +133,8 @@ public class MainSystemBank {
                 case 3 -> {
                     System.out.println(client.showExtract());
                 }
-                case 0 -> System.out.println("Voltando...");
-                default -> System.out.println("Opção inválida");
+                case 0 -> System.out.println("VOLTANDO...\n");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
             }
         } while (option != 0);
     }
@@ -157,8 +157,8 @@ public class MainSystemBank {
                 case 1 -> {
                     Client newClient = manager.createClient();
                     bankRepository.addClient(newClient);
-                    System.out.println("Criando Cliente...");
-                    System.out.println("Cliente: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
+                    System.out.println("CRIANDO CLIENTE...");
+                    System.out.println("CLIENTE: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
                 }
                 case 2 -> {
                     System.out.print("DIGITE O CPF DO CLIENTE: ");
@@ -167,15 +167,15 @@ public class MainSystemBank {
                     Client client = bankRepository.searchCustomerByCPF(cpf);
 
                     if (client == null){
-                        System.out.println("CPF NÃO CADASTRADO. CADASTRE UM CLIENTE!");
+                        System.out.println("[ERRO] - CPF NÃO CADASTRADO!\n");
                     } else {
                         System.out.println(manager.activatedAccount(client));
                     }
                 }
                 case 3 -> System.out.println(manager.listUsers(bankRepository.getClients()));
                 case 4 -> System.out.println(manager.listAccounts(bankRepository.getClients()));
-                case 0 -> System.out.println("Voltando...");
-                default -> System.out.println("Opção inválida");
+                case 0 -> System.out.println("VOLTANDO...\n");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA");
             }
         } while (option != 0);
     }
