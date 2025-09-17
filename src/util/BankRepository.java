@@ -1,6 +1,5 @@
 package util;
 
-import main.MainSystemBank;
 import models.Client;
 import models.Manager;
 
@@ -29,9 +28,7 @@ public class BankRepository {
         this.clients.add(client);
     }
 
-    public void addManager(Manager manager) {
-        this.managers.add(manager);
-    }
+    public void addManager(Manager manager) {this.managers.add(manager);}
 
     // Method search customer by CPF
     public Client searchCustomerByCPF(String cpf) {

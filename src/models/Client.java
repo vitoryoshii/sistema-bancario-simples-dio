@@ -6,10 +6,6 @@ import java.util.List;
 public class Client extends User {
 
     // Variables to control the models.Client's internal methods
-    private String name;
-    private final String cpf;
-    private String dateOfBirth;
-    private String address;
     private boolean account;
     private double balance;
 
@@ -17,34 +13,13 @@ public class Client extends User {
 
     // Instance for creating the client object
     public Client(String name, String cpf, String dateOfBirth, String address) {
-        this.name = name;
-        this.cpf = cpf;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
+        super(name, cpf, dateOfBirth, address);
         this.account = false;
         this.balance = 0;
     }
 
     // get methods, to externally access client information
-    public String getName() {
-        return name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public boolean getAccount() {
-        return account;
-    }
+    public boolean getAccount() {return account;}
 
     public double getBalance() {return balance;}
 

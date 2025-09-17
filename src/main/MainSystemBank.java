@@ -67,8 +67,7 @@ public class MainSystemBank {
                     if (managerSearch == null) {
                         System.out.println("[ERRO] - CPF NÃO CADASTRADO!\n");
 
-                        Manager manager = new Manager();
-                        Manager newManager = manager.createManager(cpf);
+                        Manager newManager = Manager.createManager(cpf);
                         bankRepository.addManager(newManager);
 
                         System.out.println("[SUCESSO] - CADASTRO REALIZADO!\n");

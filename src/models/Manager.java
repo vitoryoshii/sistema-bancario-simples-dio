@@ -5,37 +5,26 @@ import java.util.Scanner;
 
 import util.ValidationUtils;
 
-public class Manager {
+public class Manager extends User{
     private Scanner scanner =  new Scanner(System.in);
 
     // Variables to control the models.Manager internal methods
-    private String name;
-    private String cpf;
-    private String dateOfBirth;
-    private String address;
     private String user;
     private String password;
 
     // constructor method of the manager object
     public Manager(String name, String cpf, String dateOfBirth, String address, String user, String password) {
-        this.name = name;
-        this.cpf = cpf;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
+        super(name, cpf, dateOfBirth, address);
         this.user = user;
         this.password = password;
     }
 
     // constructor method empty
     public Manager() {
-
+        super();
     }
 
     // Method to return in attributes
-    public String getCpf() {
-        return cpf;
-    }
-
     public String getUser() {
         return user;
     }
@@ -46,45 +35,45 @@ public class Manager {
 
     // Method to create new customers
     public Client createClient() {
-        scanner = new Scanner(System.in);
-
         // Capture customer information so you can create
+        String clientName, clientCPF, clientDateOfBirth, clientAddress;
+
         System.out.println("CADASTRO DE CLIENTE");
 
         // Requests customer data, verifies if it is correct, if not, validates the operations
         do {
             System.out.print("DIGITE SEU NOME: ");
-            name = scanner.nextLine();
-            if (!ValidationUtils.isValidName(name)) {
+            clientName = scanner.nextLine();
+            if (!ValidationUtils.isValidName(clientName)) {
                 System.out.println("[ERRO] - NOME INVÁLIDO! APENAS LETRAS E ESPAÇOS.");
             }
-        } while (!ValidationUtils.isValidName(name));
+        } while (!ValidationUtils.isValidName(clientName));
 
         do {
             System.out.print("DIGITE O CPF (000.000.000-00): ");
-            cpf = scanner.nextLine();
-            if (!ValidationUtils.isValidCPF(cpf)) {
+            clientCPF = scanner.nextLine();
+            if (!ValidationUtils.isValidCPF(clientCPF)) {
                 System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.");
             }
-        } while (!ValidationUtils.isValidCPF(cpf));
+        } while (!ValidationUtils.isValidCPF(clientCPF));
 
         do {
             System.out.print("DIGITE SUA DATA DE NASCIMENTO (DD-MM-YYYY): ");
-            dateOfBirth = scanner.nextLine();
-            if (!ValidationUtils.isValidDate(dateOfBirth)) {
+            clientDateOfBirth = scanner.nextLine();
+            if (!ValidationUtils.isValidDate(clientDateOfBirth)) {
                 System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE");
             }
-        }while (!ValidationUtils.isValidDate(dateOfBirth));
+        }while (!ValidationUtils.isValidDate(clientDateOfBirth));
 
         do {
             System.out.print("DIGITE SEU ENDEREÇO: ");
-            address = scanner.nextLine();
-            if (!ValidationUtils.isValidAddress(address)) {
+            clientAddress = scanner.nextLine();
+            if (!ValidationUtils.isValidAddress(clientAddress)) {
                 System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
             }
-        } while (!ValidationUtils.isValidAddress(address));
+        } while (!ValidationUtils.isValidAddress(clientAddress));
 
-        return new Client(name, cpf, dateOfBirth, address);
+        return new Client(clientName, clientCPF, clientDateOfBirth, clientAddress);
     }
 
     // Method to assign an account
@@ -140,47 +129,50 @@ public class Manager {
     }
 
     // Method that creates when there is no manager on the list
-    public Manager createManager(String cpf) {
+    public static Manager createManager(String cpf) {
+        Scanner scanner = new Scanner(System.in);
+        String managerName, managerDateOfBirth, managerAddress, managerUser, managerPassword;
+
         System.out.println("CADASTRO DE GERENTE");
 
         // Requests customer data, verifies if it is correct, if not, validates the operations
         do {
             System.out.print("DIGITE SEU NOME: ");
-            name = scanner.nextLine();
-            if (!ValidationUtils.isValidName(name)) {
+            managerName = scanner.nextLine();
+            if (!ValidationUtils.isValidName(managerName)) {
                 System.out.println("[ERRO] - NOME INVÁLIDO! APENAS LETRAS E ESPAÇOS.");
             }
-        } while (!ValidationUtils.isValidName(name));
+        } while (!ValidationUtils.isValidName(managerName));
 
         do {
             System.out.print("DIGITE SUA DATA DE NASCIMENTO (DD-MM-YYYY): ");
-            dateOfBirth = scanner.nextLine();
-            if (!ValidationUtils.isValidDate(dateOfBirth)) {
+            managerDateOfBirth = scanner.nextLine();
+            if (!ValidationUtils.isValidDate(managerDateOfBirth)) {
                 System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE.");
             }
-        } while (!ValidationUtils.isValidDate(dateOfBirth));
+        } while (!ValidationUtils.isValidDate(managerDateOfBirth));
 
         do {
             System.out.print("DIGITE SEU ENDERECO: ");
-            address = scanner.nextLine();
-            if (!ValidationUtils.isValidAddress(address)) {
+            managerAddress = scanner.nextLine();
+            if (!ValidationUtils.isValidAddress(managerAddress)) {
                 System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
             }
-        } while (!ValidationUtils.isValidAddress(address));
+        } while (!ValidationUtils.isValidAddress(managerAddress));
 
         do {
             System.out.print("DIGITE SEU USUÁRIO (USER.DEMOSTRATIVO): ");
-            user = scanner.nextLine();
-            if (!ValidationUtils.isValidUser(user)) {
+            managerUser = scanner.nextLine();
+            if (!ValidationUtils.isValidUser(managerUser)) {
                 System.out.println("[ERRO] - USUÁRIO INVÁLIDO! DIGITE NOVAMENTE.");
             }
-        } while (!ValidationUtils.isValidUser(user));
+        } while (!ValidationUtils.isValidUser(managerUser));
 
         do {
             System.out.print("DIGITE SUA SENHA: ");
-            password = scanner.nextLine();
-        } while (!password.matches("^[a-zA-Z]+$"));
+            managerPassword = scanner.nextLine();
+        } while (!managerPassword.matches("^[a-zA-Z]+$"));
 
-        return new Manager(name, cpf, dateOfBirth, address,  user, password);
+        return new Manager(managerName, cpf, managerDateOfBirth, managerAddress,  managerUser, managerPassword);
     }
 }
