@@ -146,6 +146,9 @@ public class MainSystemBank {
             System.out.println("2 - ATIVAR CONTA CLIENTE");
             System.out.println("3 - LISTAR CLIENTES");
             System.out.println("4 - LISTAR CONTAS CLIENTES");
+            System.out.println("===========================");
+            System.out.println("5 - ATUALIZAÇÃO CADASTRAL (IMPLEMENTAR)");
+            System.out.println("===========================");
             System.out.println("0 - VOLTAR");
             System.out.println("===========================");
             System.out.print("OPÇÃO: ");
@@ -173,6 +176,14 @@ public class MainSystemBank {
                 }
                 case 3 -> System.out.println(manager.listUsers(bankRepository.getClients()));
                 case 4 -> System.out.println(manager.listAccounts(bankRepository.getClients()));
+                /*
+                    Criar funcionalidade nova no sistema, para poder atualizar o cadastro de um cliente.
+                    - Deve pedir CPF do cliente, procurar dentro da lista do cliente.
+                    - Trazer as informações atuais do cliente (pode ser no formato que está implementado para listar usuário).
+                    - Pedir as informações para atualizar o cadastro e caso não queira alterar alguma informação só continuar (com enter).
+                        - Realizar as verificações no padrão já existente em produção.
+                    - Apresentar mensagem padrão de sucesso ou erro.
+                */
                 case 0 -> System.out.println("VOLTANDO...\n");
                 default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA");
             }
