@@ -22,7 +22,7 @@ public class MainSystemBank {
     public static void mainMenu() {
 
         do {
-            System.out.println("=== BANCO DIGITAL ===");
+            System.out.println("===== BANCO DIGITAL =====");
             System.out.println("1 - ACESSO CLIENTE");
             System.out.println("2 - ACESSO GERENTE");
             System.out.println("0 - SAIR");
@@ -101,7 +101,7 @@ public class MainSystemBank {
             System.out.println("2 - DEPOSITO");
             System.out.println("3 - EXTRATO");
             System.out.println("0 - VOLTAR");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.print("OPÇÃO: ");
 
             option = MainSystemBank.scanner.nextInt();
@@ -146,11 +146,11 @@ public class MainSystemBank {
             System.out.println("2 - ATIVAR CONTA CLIENTE");
             System.out.println("3 - LISTAR CLIENTES");
             System.out.println("4 - LISTAR CONTAS CLIENTES");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.println("5 - ATUALIZAÇÃO CADASTRAL (IMPLEMENTAR)");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.println("0 - VOLTAR");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.print("OPÇÃO: ");
 
             option = scanner.nextInt();
