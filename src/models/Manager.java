@@ -6,7 +6,7 @@ import java.util.Scanner;
 import util.ValidationUtils;
 
 public class Manager extends User{
-    private Scanner scanner =  new Scanner(System.in);
+    private final Scanner scanner =  new Scanner(System.in);
 
     // Variables to control the models.Manager internal methods
     private String user;

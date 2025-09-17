@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class MainSystemBank {
 
-    private static BankRepository bankRepository = new BankRepository();
-    private static Scanner scanner =  new Scanner(System.in);
+    private static final BankRepository bankRepository = new BankRepository();
+    private static final Scanner scanner =  new Scanner(System.in);
 
     // Main start of the entire system
     public static void main(String[] args) {
@@ -111,7 +111,7 @@ public class MainSystemBank {
                     System.out.print("VALOR DO SAQUE: ");
                     double value = scanner.nextDouble();
 
-                    if (client.getAccount() == false){
+                    if (!client.getAccount()){
                         System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.withdraw(value);
@@ -122,7 +122,7 @@ public class MainSystemBank {
                     System.out.print("VALOR DEPOSITO: ");
                     double value = scanner.nextDouble();
 
-                    if  (client.getAccount() == false){
+                    if  (!client.getAccount()){
                         System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.deposit(value);

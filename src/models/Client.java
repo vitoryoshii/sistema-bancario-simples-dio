@@ -9,7 +9,7 @@ public class Client extends User {
     private boolean account;
     private double balance;
 
-    private List<String> extract = new ArrayList<>();
+    private final List<String> extract = new ArrayList<>();
 
     // Instance for creating the client object
     public Client(String name, String cpf, String dateOfBirth, String address) {
