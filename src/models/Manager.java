@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import util.ValidationUtils;
 
-public class Manager extends User{
-    private final Scanner scanner =  new Scanner(System.in);
+public class Manager extends User {
+    private final Scanner scanner = new Scanner(System.in);
 
     // Variables to control the models.Manager internal methods
     private String user;
@@ -63,7 +63,7 @@ public class Manager extends User{
             if (!ValidationUtils.isValidDate(clientDateOfBirth)) {
                 System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE");
             }
-        }while (!ValidationUtils.isValidDate(clientDateOfBirth));
+        } while (!ValidationUtils.isValidDate(clientDateOfBirth));
 
         do {
             System.out.print("DIGITE SEU ENDEREÇO: ");
@@ -153,7 +153,7 @@ public class Manager extends User{
         } while (!ValidationUtils.isValidDate(managerDateOfBirth));
 
         do {
-            System.out.print("DIGITE SEU ENDERECO: ");
+            System.out.print("DIGITE SEU ENDEREÇO: ");
             managerAddress = scanner.nextLine();
             if (!ValidationUtils.isValidAddress(managerAddress)) {
                 System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
@@ -173,6 +173,60 @@ public class Manager extends User{
             managerPassword = scanner.nextLine();
         } while (!managerPassword.matches("^[a-zA-Z]+$"));
 
-        return new Manager(managerName, cpf, managerDateOfBirth, managerAddress,  managerUser, managerPassword);
+        return new Manager(managerName, cpf, managerDateOfBirth, managerAddress, managerUser, managerPassword);
+    }
+
+    public void updateRegistration(Client client, Scanner scanner) {
+        System.out.println("\nATUALIZAÇÃO CADASTRAL");
+
+        if (client == null) {
+            System.out.println("[ERRO] - CPF NÃO ENCONTRADO!\n");
+            return;
+        }
+
+        // Update name or maintains the current
+        System.out.println("NOME ATUAL: [" + client.getName() + "] - ENTER PARA PULAR ALTERAÇÃO");
+        String nameUpdate = scanner.next();
+        if (!nameUpdate.isBlank()) {
+            if (ValidationUtils.isValidName(nameUpdate)) {
+                client.setName(nameUpdate);
+            } else {
+                System.out.println("[ERRO] - NOME INVÁLIDO, MANTENDO O VALOR ANTIGO.\n");
+            }
+        }
+
+        // Update date birthed or maintains
+        System.out.println("DATA ATUAL: [" + client.getDateOfBirth() + "] - ENTER PARA PULAR ALTERAÇÃO");
+        String dateBirthedUpdate = scanner.next();
+        if (!dateBirthedUpdate.isBlank()) {
+            if (ValidationUtils.isValidDate(dateBirthedUpdate)) {
+                client.setDateOfBirth(dateBirthedUpdate);
+            } else {
+                System.out.println("[ERRO] - DATA INVÁLIDA, MANTENDO O VALOR ANTIGO.\n");
+            }
+        }
+
+        // Update address or maintains the current
+        System.out.println("ENDEREÇO ATUAL: [" + client.getAddress() + "] - ENTER PARA PULAR ALTERAÇÃO");
+        String addressUpdate = scanner.next();
+        if (!addressUpdate.isBlank()) {
+            if (ValidationUtils.isValidAddress(addressUpdate)) {
+                client.setAddress(addressUpdate);
+            } else {
+                System.out.println("[ERRO] - ENDEREÇO INVÁLIDO, MANTENDO O VALOR ANTIGO.\n");
+            }
+        }
+
+        // String the updated data
+        System.out.println("\n[SUCESSO] - DADOS ATUALIZADO!\n");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("---------------------------\n")
+                .append("NOME: ").append(client.getName()).append("\n")
+                .append("CPF: ").append(client.getCpf()).append("\n")
+                .append("DATA DE NASCIMENTO: ").append(client.getDateOfBirth()).append("\n")
+                .append("ENDEREÇO: ").append(client.getAddress()).append("\n")
+                .append("---------------------------\n");
+        System.out.println(sb);
     }
 }

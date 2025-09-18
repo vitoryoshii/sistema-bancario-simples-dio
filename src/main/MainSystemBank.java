@@ -88,7 +88,7 @@ public class MainSystemBank {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!\n");
             }
         }   while (true);
     }
@@ -133,7 +133,7 @@ public class MainSystemBank {
                     System.out.println(client.showExtract());
                 }
                 case 0 -> System.out.println("VOLTANDO...\n");
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!\n");
             }
         } while (option != 0);
     }
@@ -147,7 +147,7 @@ public class MainSystemBank {
             System.out.println("3 - LISTAR CLIENTES");
             System.out.println("4 - LISTAR CONTAS CLIENTES");
             System.out.println("====================================");
-            System.out.println("5 - ATUALIZAÇÃO CADASTRAL (IMPLEMENTAR)");
+            System.out.println("5 - ATUALIZAÇÃO CADASTRAL");
             System.out.println("====================================");
             System.out.println("0 - VOLTAR");
             System.out.println("====================================");
@@ -163,7 +163,7 @@ public class MainSystemBank {
                     System.out.println("CLIENTE: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
                 }
                 case 2 -> {
-                    System.out.print("DIGITE O CPF DO CLIENTE: ");
+                    System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
                     String cpf = scanner.next();
 
                     Client client = bankRepository.searchCustomerByCPF(cpf);
@@ -176,16 +176,17 @@ public class MainSystemBank {
                 }
                 case 3 -> System.out.println(manager.listUsers(bankRepository.getClients()));
                 case 4 -> System.out.println(manager.listAccounts(bankRepository.getClients()));
-                /*
-                    Criar funcionalidade nova no sistema, para poder atualizar o cadastro de um cliente.
-                    - Deve pedir CPF do cliente, procurar dentro da lista do cliente.
-                    - Trazer as informações atuais do cliente (pode ser no formato que está implementado para listar usuário).
-                    - Pedir as informações para atualizar o cadastro e caso não queira alterar alguma informação só continuar (com enter).
-                        - Realizar as verificações no padrão já existente em produção.
-                    - Apresentar mensagem padrão de sucesso ou erro.
-                */
+                case 5 -> {
+                    System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
+                    String cpf = scanner.next();
+
+                    if (ValidationUtils.isValidCPF(cpf)) {
+                        Client client = bankRepository.searchCustomerByCPF(cpf);
+                        manager.updateRegistration(client, scanner);
+                    } else {System.out.println("[ERRO] - CPF INVÁLIDA!\n");}
+                }
                 case 0 -> System.out.println("VOLTANDO...\n");
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA\n");
             }
         } while (option != 0);
     }
