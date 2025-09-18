@@ -64,7 +64,7 @@ Ao iniciar o programa, você verá o menu principal:
 
 ```plaintext
 
-=== BANCO DIGITAL ===
+====== BANCO DIGITAL ======
 1 - ACESSO CLIENTE
 2 - ACESSO GERENTE
 0 - SAIR
