@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class MainSystemBank {
 
-    private static BankRepository bankRepository = new BankRepository();
-    private static Scanner scanner =  new Scanner(System.in);
+    private static final BankRepository bankRepository = new BankRepository();
+    private static final Scanner scanner =  new Scanner(System.in);
 
     // Main start of the entire system
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class MainSystemBank {
     public static void mainMenu() {
 
         do {
-            System.out.println("=== BANCO DIGITAL ===");
+            System.out.println("===== BANCO DIGITAL =====");
             System.out.println("1 - ACESSO CLIENTE");
             System.out.println("2 - ACESSO GERENTE");
             System.out.println("0 - SAIR");
@@ -88,7 +88,7 @@ public class MainSystemBank {
                 case 0 -> {
                     return;
                 }
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!\n");
             }
         }   while (true);
     }
@@ -101,7 +101,7 @@ public class MainSystemBank {
             System.out.println("2 - DEPOSITO");
             System.out.println("3 - EXTRATO");
             System.out.println("0 - VOLTAR");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.print("OPÇÃO: ");
 
             option = MainSystemBank.scanner.nextInt();
@@ -111,7 +111,7 @@ public class MainSystemBank {
                     System.out.print("VALOR DO SAQUE: ");
                     double value = scanner.nextDouble();
 
-                    if (client.getAccount() == false){
+                    if (!client.getAccount()){
                         System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.withdraw(value);
@@ -122,18 +122,16 @@ public class MainSystemBank {
                     System.out.print("VALOR DEPOSITO: ");
                     double value = scanner.nextDouble();
 
-                    if  (client.getAccount() == false){
+                    if  (!client.getAccount()){
                         System.out.println("[ERRO] - CONTA NÃO ATIVADA!\n");
                     } else {
                         String stringReturn = client.deposit(value);
                         System.out.println(stringReturn);
                     }
                 }
-                case 3 -> {
-                    System.out.println(client.showExtract());
-                }
+                case 3 -> System.out.println(client.showExtract());
                 case 0 -> System.out.println("VOLTANDO...\n");
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!\n");
             }
         } while (option != 0);
     }
@@ -146,8 +144,11 @@ public class MainSystemBank {
             System.out.println("2 - ATIVAR CONTA CLIENTE");
             System.out.println("3 - LISTAR CLIENTES");
             System.out.println("4 - LISTAR CONTAS CLIENTES");
+            System.out.println("====================================");
+            System.out.println("5 - ATUALIZAÇÃO CADASTRAL");
+            System.out.println("====================================");
             System.out.println("0 - VOLTAR");
-            System.out.println("===========================");
+            System.out.println("====================================");
             System.out.print("OPÇÃO: ");
 
             option = scanner.nextInt();
@@ -160,7 +161,7 @@ public class MainSystemBank {
                     System.out.println("CLIENTE: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
                 }
                 case 2 -> {
-                    System.out.print("DIGITE O CPF DO CLIENTE: ");
+                    System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
                     String cpf = scanner.next();
 
                     Client client = bankRepository.searchCustomerByCPF(cpf);
@@ -173,8 +174,17 @@ public class MainSystemBank {
                 }
                 case 3 -> System.out.println(manager.listUsers(bankRepository.getClients()));
                 case 4 -> System.out.println(manager.listAccounts(bankRepository.getClients()));
+                case 5 -> {
+                    System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
+                    String cpf = scanner.next();
+
+                    if (ValidationUtils.isValidCPF(cpf)) {
+                        Client client = bankRepository.searchCustomerByCPF(cpf);
+                        manager.updateRegistration(client, scanner);
+                    } else {System.out.println("[ERRO] - CPF INVÁLIDA!\n");}
+                }
                 case 0 -> System.out.println("VOLTANDO...\n");
-                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA");
+                default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA\n");
             }
         } while (option != 0);
     }

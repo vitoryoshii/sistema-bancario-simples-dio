@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankRepository {
-    private List<Client> clients;
-    private List<Manager> managers;
+    private final List<Client> clients;
+    private final List<Manager> managers;
 
     public BankRepository() {
         this.clients = new ArrayList<>();
