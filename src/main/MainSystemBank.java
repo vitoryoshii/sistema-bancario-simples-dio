@@ -129,9 +129,7 @@ public class MainSystemBank {
                         System.out.println(stringReturn);
                     }
                 }
-                case 3 -> {
-                    System.out.println(client.showExtract());
-                }
+                case 3 -> System.out.println(client.showExtract());
                 case 0 -> System.out.println("VOLTANDO...\n");
                 default -> System.out.println("[ERRO] - OPÇÃO INVÁLIDA!\n");
             }
