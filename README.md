@@ -1,13 +1,13 @@
 # 🏦 Sistema Bancário Simples em Java
 
-Este projeto é uma simulação de um sistema bancário básico, desenvolvido em Java, que permite o gerenciamento de clientes e suas contas, incluindo operações de depósito, saque e visualização de extrato. O sistema também possui um módulo de gerente para cadastro e ativação de contas de clientes.
+Este projeto é uma simulação de um sistema bancário básico, desenvolvido em Java, que permite a gestão de clientes e as suas contas, incluindo operações de depósito, saque e visualização de extrato. O sistema também possui um módulo de gerente para cadastro e ativação de contas de clientes.
 
 ---
 
 ## ✨ Funcionalidades
 
 ### **Acesso ao Sistema**
-*   **Acesso Cliente:** Permite que clientes existentes acessem suas contas para realizar operações.
+*   **Acesso Cliente:** Permite que clientes existentes acessem as suas contas para realizar operações.
 *   **Acesso Gerente:** Permite que gerentes acessem funcionalidades administrativas, com cadastro inicial caso o CPF não seja encontrado.
 
 ### **Funcionalidades do Cliente**
@@ -20,6 +20,7 @@ Este projeto é uma simulação de um sistema bancário básico, desenvolvido em
 *   **Ativar Conta Cliente:** Ativa a conta de um cliente existente, permitindo que ele realize operações bancárias.
 *   **Listar Clientes:** Exibe uma lista detalhada de todos os clientes cadastrados.
 *   **Listar Contas Clientes:** Apresenta um resumo das contas dos clientes, indicando se estão ativas ou não.
+*   **Atualização Cadastral Cliente:** Atualiza as informações do Cliente (NOME, DATA NASCIMENTO e ENDEREÇO).
 
 ---
 
@@ -31,8 +32,8 @@ O projeto é organizado em pacotes e classes para melhor modularidade:
 *   `models.Client`: Representa um cliente do banco, com atributos como nome, CPF, data de nascimento, endereço, status da conta e saldo. Contém métodos para saque, depósito e exibição de extrato.
 *   `models.Manager`: Representa um gerente do banco, com atributos como nome, CPF, data de nascimento, endereço, usuário e senha. Contém métodos para criar clientes, ativar contas e listar clientes/contas.
 *   `models.User`: Classe base para `Client` e `Manager`, contendo atributos comuns como nome, CPF, data de nascimento e endereço.
-*   `util.UtilServices`: Classe utilitária para funções de busca, como encontrar clientes ou gerentes por CPF.
-
+*   `util.BankRepository`: Classe utilitária para funções de busca, como encontrar clientes ou gerentes por CPF e responsável por ter o construtor da lista gerente e cliente.
+*   `util.ValidationUtils`: Classe utilitária para fazer validações, como validar um CPF, data, endereço, usuário e nome.
 ---
 
 ## 🚀 Como Usar
@@ -60,15 +61,38 @@ O projeto é organizado em pacotes e classes para melhor modularidade:
 
 ## 📝 Exemplo de Interação
 
-Ao iniciar o programa, você verá o menu principal:
+Ao iniciar o programa, você verá o menu principal e os subsequêntes menus:
 
 ```plaintext
-
+// MENU PRINCIPAL
 ====== BANCO DIGITAL ======
 1 - ACESSO CLIENTE
 2 - ACESSO GERENTE
 0 - SAIR
 ===========================
+OPÇÃO:
+
+// MENU DO CLIENTE
+=== ACESSO CLIENTE - "NOME DO CLIENTE" ===
+1 - SAQUE
+2 - DEPOSITO
+3 - EXTRATO
+0 - VOLTAR
+==========================================
+OPÇÃO:
+
+// MENU DO GERENTE
+=== ACESSO GERENTE - "NOME DO GERENTE" ===
+1 - CRIAR CLIENTE
+2 - ATIVAR CONTA CLIENTE
+==========================================
+3 - LISTAR CLIENTES
+4 - LISTAR CONTAS CLIENTES
+==========================================
+5 - ATUALIZAÇÃO CADASTRAL
+==========================================
+0 - VOLTAR
+==========================================
 OPÇÃO:
 ```
 --- 
@@ -77,7 +101,7 @@ OPÇÃO:
     *   Escolha `2`.
     *   Digite um CPF (ex: `123.456.789-00`). O sistema informará que o CPF não está cadastrado.
     *   Prossiga com o cadastro do gerente, informando nome, data de nascimento, endereço, usuário e senha.
-    *   Após o cadastro, você poderá logar com o usuário e senha definidos.
+    *   Após o cadastro, você poderá conectar com o usuário e senha definidos.
 
 *   **Para Criar um Cliente (como Gerente):**
     *   Acesse o menu do gerente.
@@ -92,17 +116,17 @@ OPÇÃO:
 *   **Para Acessar como Cliente:**
     *   Volte ao menu principal (`0` no menu do gerente).
     *   Escolha `1`.
-    *   Digite o CPF de um cliente que já foi cadastrado e teve sua conta ativada pelo gerente.
+    *   Digite o CPF de um cliente que já foi cadastrado e teve a sua conta ativada pelo gerente.
     *   Você poderá então realizar saques, depósitos e ver o extrato.
     
 ---
 
 ## 🤝 Contribuição
 
-Contribuições são bem-vindas! Se você tiver ideias para melhorias ou encontrar bugs, sinta-se à vontade para:
+Contribuições são bem-vindas! Se você tiver ideias para melhorias ou encontrar “bugs”, sinta-se à vontade para:
 
 1.  Fazer um fork do repositório.
-2.  Criar uma nova branch (`git checkout -b feature/sua-feature` ou `bugfix/seu-bug`).
-3.  Realizar suas alterações e fazer commit (`git commit -m 'Adiciona nova feature'`).
+2.  Criar uma branch (`git checkout -b feature/sua-feature` ou `bugfix/seu-bug`).
+3.  Realizar as suas alterações e fazer commit (`git commit -m 'Adiciona nova feature'`).
 4.  Enviar para a branch (`git push origin feature/sua-feature`).
 5.  Abrir um Pull Request.
