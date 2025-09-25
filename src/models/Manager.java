@@ -176,7 +176,10 @@ public class Manager extends User {
         return new Manager(managerName, cpf, managerDateOfBirth, managerAddress, managerUser, managerPassword);
     }
 
-    public void updateRegistration(Client client, Scanner scanner) {
+    public void updateRegistration(Client client) {
+        Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\\n");
+
         System.out.println("\nATUALIZAÇÃO CADASTRAL");
 
         if (client == null) {
