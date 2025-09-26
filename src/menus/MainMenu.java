@@ -4,6 +4,7 @@ import main.MainSystemBank;
 import models.Client;
 import models.Manager;
 import util.BankRepository;
+import util.InputUtils;
 import util.ValidationUtils;
 
 import java.util.Scanner;
@@ -41,15 +42,7 @@ public class MainMenu implements Menu{
     }
 
     public void accessClient() {
-        String cpf;
-        do {
-            System.out.print("DIGITE O CPF (000.000.000-00): ");
-            cpf = scanner.next();
-            if (!ValidationUtils.isValidCPF(cpf)) {
-                System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.\n");
-                cpf = null;
-            }
-        } while (cpf == null);
+        String cpf = InputUtils.getValidCPF(scanner);
 
         Client client = bankRepository.searchCustomerByCPF(cpf);
 
@@ -61,15 +54,7 @@ public class MainMenu implements Menu{
     }
 
     public void accessManager() {
-        String cpf;
-        do {
-            System.out.print("DIGITE O CPF (000.000.000-00): ");
-            cpf = scanner.next();
-            if (!ValidationUtils.isValidCPF(cpf)) {
-                System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.\n");
-                cpf = null;
-            }
-        } while (cpf == null);
+        String cpf = InputUtils.getValidCPF(scanner);
 
         Manager manager = bankRepository.searchManagerByCPF(cpf);
 

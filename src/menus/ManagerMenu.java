@@ -3,7 +3,7 @@ package menus;
 import models.Client;
 import models.Manager;
 import util.BankRepository;
-import util.ValidationUtils;
+import util.InputUtils;
 
 import java.util.Scanner;
 
@@ -55,25 +55,26 @@ public class ManagerMenu implements Menu{
     }
 
     public void activateClient() {
-        System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
-        String cpf = scanner.next();
+        String cpf = InputUtils.getValidCPF(scanner);
 
         Client client = bankRepository.searchCustomerByCPF(cpf);
 
-        if (client == null){
-            System.out.println("[ERRO] - CPF NÃO CADASTRADO!\n");
-        } else {
+        if (client != null){
             System.out.println(manager.activatedAccount(client));
+        } else {
+            System.out.println("[ERRO] - CPF NÃO CADASTRADO!\n");
         }
     }
 
     public void updateClient() {
-        System.out.print("DIGITE O CPF DO CLIENTE (000.000.000-00): ");
-        String cpf = scanner.next();
+        String cpf = InputUtils.getValidCPF(scanner);
 
-        if (ValidationUtils.isValidCPF(cpf)) {
-            Client client = bankRepository.searchCustomerByCPF(cpf);
+        Client client = bankRepository.searchCustomerByCPF(cpf);
+
+        if (client != null) {
             manager.updateRegistration(client);
-        } else {System.out.println("[ERRO] - CPF INVÁLIDA!\n");}
+        } else {
+            System.out.println("[ERRO] - CPF NÃO ENCONTRADO!\n");
+        }
     }
 }
