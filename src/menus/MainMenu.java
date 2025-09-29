@@ -1,6 +1,5 @@
 package menus;
 
-import main.MainSystemBank;
 import models.Client;
 import models.Manager;
 import util.BankRepository;
@@ -71,12 +70,7 @@ public class MainMenu implements Menu{
             System.out.print("DIGITE A SENHA: ");
             String password = scanner.next();
 
-            if (manager.getUser().equals(user) && manager.getPassword().equals(password)) {
-                System.out.println("[SUCESSO] - LOGIN REALIZADO!\n");
-                new ManagerMenu(bankRepository, manager, scanner).exibir();
-            } else {
-                System.out.println("[ERRO] - USUÁRIO OU SENHA INCORRETA!\n");
-            }
+            ValidationUtils.checkUsernamePassword(manager, bankRepository, scanner, user, password);
         }
     }
 }

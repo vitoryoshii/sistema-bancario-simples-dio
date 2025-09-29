@@ -1,6 +1,5 @@
 package menus;
 
-import main.MainSystemBank;
 import models.Client;
 import util.BankRepository;
 
@@ -9,7 +8,7 @@ import java.util.Scanner;
 public class ClientMenu implements Menu{
     private final BankRepository bankRepository;
     private final Client client;
-    private final Scanner scanner;
+    private Scanner scanner;
 
     public ClientMenu(BankRepository bankRepository, Client client, Scanner scanner) {
         this.bankRepository = bankRepository;

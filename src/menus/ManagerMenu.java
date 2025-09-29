@@ -51,7 +51,7 @@ public class ManagerMenu implements Menu{
     public void createClient() {
         Client newClient = manager.createClient();
         bankRepository.addClient(newClient);
-        System.out.println("CLIENTE CRIADO: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
+        System.out.println("[SUCESSO] - CLIENTE CRIADO: " + newClient.getName() + " - CPF: " + newClient.getCpf() + "\n");
     }
 
     public void activateClient() {

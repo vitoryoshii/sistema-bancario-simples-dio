@@ -52,11 +52,13 @@ public class Client extends User {
         if (extract.isEmpty()) {
             return "SEM MOVIMENTAÇÃO.";
         }
+
         StringBuilder sb = new StringBuilder("=== EXTRATO ===\n");
         for (String line : extract) {
             sb.append(line).append("\n");
         }
         sb.append("SALDO ATUAL - R$ ").append(balance).append("\n");
+
         return sb.toString();
     }
 
