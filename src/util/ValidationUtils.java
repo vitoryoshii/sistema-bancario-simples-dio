@@ -1,5 +1,10 @@
 package util;
 
+import menus.ManagerMenu;
+import models.Manager;
+
+import java.util.Scanner;
+
 public class ValidationUtils {
     // Removed character not numeric
     public static String cleanCPF(String cpf) {
@@ -65,7 +70,7 @@ public class ValidationUtils {
     }
 
     // Validate user (e.g. user.demonstrative)
-    public static boolean isValidUser (String user) {
+    public static boolean isValidUser(String user) {
         return user != null && user.matches("^[a-zA-Z]+\\.[a-zA-Z]+$");
     }
 
@@ -73,4 +78,15 @@ public class ValidationUtils {
     public static boolean isValidPassword(String password) {
         return password != null && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$");
     }
+
+    // Validates if user and password are correct and calls the respective function
+    public static void checkUsernamePassword(Manager manager, BankRepository bankRepository, Scanner scanner, String user, String password) {
+        if (manager.getUser().equals(user) && manager.getPassword().equals(password)) {
+            System.out.println("[SUCESSO] - LOGIN REALIZADO!\n");
+            new ManagerMenu(bankRepository, manager, scanner).exibir();
+        } else {
+            System.out.println("[ERRO] - USUÁRIO OU SENHA INCORRETA!\n");
+        }
+    }
+
 }
