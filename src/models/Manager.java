@@ -73,7 +73,7 @@ public class Manager extends User {
         // Capture customer information so you can create
         String clientName, clientCPF, clientDateOfBirth, clientAddress;
 
-        System.out.println("CADASTRO DE CLIENTE");
+        System.out.println("\n==== CADASTRO DE CLIENTE ====");
 
         // Call the responsible functions to capture the information
         clientName = InputUtils.getName(scanner);
@@ -94,8 +94,6 @@ public class Manager extends User {
      */
     public static Manager createManager() {
         String managerCPF, managerName, managerDateOfBirth, managerAddress, managerUser, managerPassword;
-
-        System.out.println("CADASTRO DE GERENTE");
 
         // Call the responsible functions to capture the information
         managerCPF = InputUtils.getValidCPF(scanner);

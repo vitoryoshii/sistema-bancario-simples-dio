@@ -71,7 +71,7 @@ public class ClientMenu implements Menu{
 
         if (clientDAO.deposit(client, value)) {
             client.setBalance(client.getBalance() + value);
-            System.out.println("[SUCESSO] - DEPÓSITO DE R$ " + value + " REALIZADO! NOVO SALDO: R$ " + client.getBalance());
+            System.out.println("[SUCESSO] - DEPÓSITO DE R$ " + value + " REALIZADO! NOVO SALDO: R$ " + client.getBalance() + "\n");
         } else {
             // O rollback ocorreu dentro do ClientDAO
             System.out.println("[ERRO] - DEPÓSITO FALHOU. Consulte o log para detalhes.");
@@ -95,7 +95,7 @@ public class ClientMenu implements Menu{
 
         if (clientDAO.withdraw(client, value)) {
             client.setBalance(client.getBalance() - value);
-            System.out.println("[SUCESSO] - SAQUE DE R$ " + value + " REALIZADO! NOVO SALDO: R$ " + client.getBalance());
+            System.out.println("[SUCESSO] - SAQUE DE R$ " + value + " REALIZADO! NOVO SALDO: R$ " + client.getBalance() + "\n");
         } else {
             System.out.println("[ERRO] - SAQUE FALHOU. Consulte o log para detalhes.");
         }
@@ -108,7 +108,7 @@ public class ClientMenu implements Menu{
      * The history is displayed in reverse chronological order (most recent first).
      */
     private void showExtract() {
-        System.out.println("\n=== EXTRATO DE TRANSAÇÕES ===");
+        System.out.println("\n============ EXTRATO DE TRANSAÇÕES ============");
         List<Transaction> extract = transactionDAO.getExtractByClientId(client.getId());
 
         if (extract.isEmpty()) {
@@ -123,8 +123,8 @@ public class ClientMenu implements Menu{
                         t.getType(), sign, t.getValue());
             }
         }
-        System.out.println("\n----------------------------------------------");
+        System.out.println("\n-----------------------------------------------");
         System.out.println("SALDO: " + client.getBalance());
-        System.out.println("----------------------------------------------\n");
+        System.out.println("-----------------------------------------------\n");
     }
 }

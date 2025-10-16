@@ -188,7 +188,7 @@ public class ManagerMenu implements Menu{
      * Persists changes using {@link ClientDao#updateClientInfo(Client)}.
      */
     public void updateClient() {
-        System.out.println("\nATUALIZAÇÃO CADASTRAL");
+        System.out.println("\n==== ATUALIZAÇÃO CADASTRAL ====");
         scanner.nextLine();
 
         String cpf = InputUtils.getValidCPF(scanner);
@@ -226,7 +226,7 @@ public class ManagerMenu implements Menu{
         }
 
         // ==== BIRTH DATE ====
-        System.out.println("DATA NASC. ATUAL: [" + client.getDateOfBirth() + "]");
+        System.out.println("\nDATA NASC. ATUAL: [" + client.getDateOfBirth() + "]");
         System.out.print("DIGITE NOVA DATA (DD-MM-YYYY) (ou ENTER para manter): ");
         String newDate = scanner.nextLine().trim();
         if (!newDate.isBlank()) {
@@ -239,7 +239,7 @@ public class ManagerMenu implements Menu{
         }
 
         // ==== ADDRESS ====
-        System.out.println("ENDEREÇO ATUAL: [" + client.getAddress() + "]");
+        System.out.println("\nENDEREÇO ATUAL: [" + client.getAddress() + "]");
         System.out.print("DIGITE NOVO ENDEREÇO (ou ENTER para manter): ");
         String newAddress = scanner.nextLine().trim();
         if (!newAddress.isBlank()) {
@@ -254,15 +254,15 @@ public class ManagerMenu implements Menu{
         // ==== SALVAR ====
         if (updated) {
             if (clientDAO.updateClientInfo(client)) {
-                System.out.println("\n[SUCESSO] - DADOS DO CLIENTE ATUALIZADO NO SISTEMA!");
+                System.out.println("\n[SUCESSO] - DADOS DO CLIENTE ATUALIZADO NO SISTEMA!\n");
                 System.out.println("Novo Nome: " + client.getName());
                 System.out.println("Nova Data de Nascimento: " + client.getDateOfBirth());
                 System.out.println("Novo Endereço: " + client.getAddress());
             } else {
-                System.out.println("\n[ERRO] - FALHA AO SALVAR NO BANCO DE DADOS.");
+                System.out.println("\n[ERRO] - FALHA AO SALVAR NO BANCO DE DADOS.\n");
             }
         } else {
-            System.out.println("\n[INFO] - NENHUMA ATUALIZAÇÃO VALIDA FOI REALIZADA. DADOS MANTIDOS!");
+            System.out.println("\n[INFO] - NENHUMA ATUALIZAÇÃO VALIDA FOI REALIZADA. DADOS MANTIDOS!\n");
         }
     }
 

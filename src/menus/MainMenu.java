@@ -72,7 +72,7 @@ public class MainMenu implements Menu{
      * Handles {@code SQLException} during the database lookup.
      */
     private void clientLogin() {
-        System.out.println("\n=== LOGIN CLIENTE ===");
+        System.out.println("\n===== LOGIN CLIENTE =====");
 
         InputUtils.clearBuffer(scanner);
         String cpf = InputUtils.getValidCPF(scanner);
@@ -89,7 +89,7 @@ public class MainMenu implements Menu{
             Client client = clientOpt.get();
 
             if (client.getAccount()) {
-                System.out.println("[SUCESSO] - BEM-VINDO(A), " + client.getName() + "!");
+                System.out.println("[SUCESSO] - BEM-VINDO(A), " + client.getName() + "!\n");
                 new ClientMenu(client, scanner).exibir();
             } else {
                 System.out.println("[ERRO] - SUA CONTA ESTÁ INATIVA. Contate o gerente para ativação.");
@@ -106,7 +106,7 @@ public class MainMenu implements Menu{
      * and delegates password and authentication logic to {@link ValidationUtils#checkUsernamePassword(Scanner, String, String)}.
      */
     private void managerLogin() {
-        System.out.println("\n=== LOGIN GERENTE ===");
+        System.out.println("\n===== LOGIN GERENTE =====");
         System.out.print("USUÁRIO: ");
         String user = scanner.next().trim();
         System.out.print("SENHA: ");
@@ -130,7 +130,7 @@ public class MainMenu implements Menu{
      * object to the database via {@link ManagerDao#insertManager(Manager)}.
      */
     private void createManagerAccount() {
-        System.out.println("\n=== CADASTRO DO PRIMEIRO GERENTE ===");
+        System.out.println("\n=== CADASTRO DE GERENTE ===");
         Manager manager = new Manager();
 
         Manager newManager = manager.createManager();
@@ -139,7 +139,7 @@ public class MainMenu implements Menu{
             System.out.println("\n[SUCESSO] - GERENTE " + newManager.getName() + " CADASTRADO COM SUCESSO!");
             System.out.println("Por favor, faça LOGIN com seu novo USUÁRIO/SENHA.\n");
         } else {
-            System.out.println("[ERRO] - GERENTE NÃO CADASTRADO!");
+            System.out.println("[ERRO] - GERENTE NÃO CADASTRADO!\n");
         }
     }
 }
