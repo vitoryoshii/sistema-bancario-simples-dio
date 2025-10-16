@@ -1,8 +1,10 @@
 package util;
 
+import dao.ManagerDao;
 import menus.ManagerMenu;
 import models.Manager;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ValidationUtils {
@@ -80,12 +82,31 @@ public class ValidationUtils {
     }
 
     // Validates if user and password are correct and calls the respective function
-    public static void checkUsernamePassword(Manager manager, BankRepository bankRepository, Scanner scanner, String user, String password) {
-        if (manager.getUser().equals(user) && manager.getPassword().equals(password)) {
-            System.out.println("[SUCESSO] - LOGIN REALIZADO!\n");
-            new ManagerMenu(bankRepository, manager, scanner).exibir();
-        } else {
-            System.out.println("[ERRO] - USUÁRIO OU SENHA INCORRETA!\n");
+    public static void checkUsernamePassword(Scanner scanner, String user, String password) {
+
+        ManagerDao managerDAO = new ManagerDao();
+
+        try {
+            Optional<Manager> managerOpt = managerDAO.findManagerByUser(user);
+
+            if (managerOpt.isPresent()) {
+                Manager manager = managerOpt.get();
+                String storedHash = manager.getPassword();
+
+
+                if (password.equals(storedHash)) {
+
+                    System.out.println("[SUCESSO] - LOGIN REALIZADO!\n");
+                    new ManagerMenu(manager, scanner).exibir();
+
+                } else {
+                    System.out.println("[ERRO] - SENHA INCORRETA.");
+                }
+            } else {
+                System.out.println("[ERRO] - USUÁRIO NÃO ENCONTRADO.");
+            }
+        } catch (Exception e) {
+            System.err.println("[ERRO FATAL] - Falha na conexão ou no login: " + e.getMessage());
         }
     }
 

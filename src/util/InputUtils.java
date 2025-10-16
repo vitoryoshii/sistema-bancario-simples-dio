@@ -7,7 +7,7 @@ public class InputUtils {
         String cpf;
         do {
             System.out.print("DIGITE O CPF (000.000.000-00): ");
-            cpf = scanner.next();
+            cpf = scanner.nextLine();
             if (!ValidationUtils.isValidCPF(cpf)) {
                 System.out.println("[ERRO] - CPF INVÁLIDO! DIGITE NOVAMENTE.");
             }
@@ -20,7 +20,7 @@ public class InputUtils {
         String name;
         do {
             System.out.print("DIGITE SEU NOME: ");
-            name = scanner.next();
+            name = scanner.nextLine();
             if (!ValidationUtils.isValidName(name)) {
                 System.out.println("[ERRO] - NOME INVÁLIDO! APENAS LETRAS E ESPAÇOS.");
             }
@@ -33,7 +33,7 @@ public class InputUtils {
         String dateOfBirth;
         do {
             System.out.print("DIGITE SUA DATA DE NASCIMENTO (DD-MM-YYYY): ");
-            dateOfBirth = scanner.next();
+            dateOfBirth = scanner.nextLine();
             if (!ValidationUtils.isValidDate(dateOfBirth)) {
                 System.out.println("[ERRO] - DATA INVÁLIDA! DIGITE NOVAMENTE");
             }
@@ -46,7 +46,7 @@ public class InputUtils {
         String address;
         do {
             System.out.print("DIGITE SEU ENDEREÇO: ");
-            address = scanner.next();
+            address = scanner.nextLine();
             if (!ValidationUtils.isValidAddress(address)) {
                 System.out.println("[ERRO] - ENDEREÇO INVÁLIDO! DIGITE NOVAMENTE.");
             }
@@ -59,10 +59,12 @@ public class InputUtils {
         String user;
         do {
             System.out.print("DIGITE SEU USUÁRIO (USER.DEMOSTRATIVO): ");
-            user = scanner.next();
+            user = scanner.nextLine();
             if (!ValidationUtils.isValidUser(user)) {
                 System.out.println("[ERRO] - USUÁRIO INVÁLIDO! DIGITE NOVAMENTE.");
             }
+
+            clearBuffer(scanner);
         } while (!ValidationUtils.isValidUser(user));
 
         return user;
@@ -72,10 +74,17 @@ public class InputUtils {
         String password;
         do {
             System.out.print("DIGITE SUA SENHA: ");
-            password = scanner.next();
+            password = scanner.nextLine();
+
+            clearBuffer(scanner);
         } while (!password.matches("^[a-zA-Z]+$"));
 
         return password;
+    }
+    public static void clearBuffer(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
     }
 
 

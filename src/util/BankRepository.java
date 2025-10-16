@@ -1,52 +1,72 @@
 package util;
 
-import models.Client;
-import models.Manager;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Utility class responsible for managing the connection to the Oracle database.
+ * Centralizes JDBC configuration and transaction control methods.
+ * (commit, rollback e close).
+ */
 public class BankRepository {
-    private final List<Client> clients;
-    private final List<Manager> managers;
 
-    public BankRepository() {
-        this.clients = new ArrayList<>();
-        this.managers = new ArrayList<>();
-    }
+    private static final String JDBCURL = "jdbc:oracle:thin:@localhost:1521:XE";
+    private static final String USER = "SYSTEM";
+    private static final String PASSWORD = "master";
 
-    // Methods get e set to Lists Clients and Manager
-    public List<Client> getClients() {
-        return clients;
-    }
+    /**
+     * Establishes and returns a new connection to the Oracle Database.
+     *
+     * @return Objeto Connection.
+     * @throws SQLException If a database connection error occurs.
+     */
+    public static Connection getConnection() {
+        try {
+            Connection connection = DriverManager.getConnection(JDBCURL, USER, PASSWORD);
+            connection.setAutoCommit(false);
 
-    public List<Manager> getManagers() {
-        return managers;
-    }
-
-    public void addClient(Client client) {
-        this.clients.add(client);
-    }
-
-    public void addManager(Manager manager) {this.managers.add(manager);}
-
-    // Method search customer by CPF
-    public Client searchCustomerByCPF(String cpf) {
-        for (Client c : getClients()) {
-            if (c.getCpf().equals(cpf)) {
-                return c; // return client found
-            }
+            return connection;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar: " + e.getMessage(), e);
         }
-        return null; // return null
     }
 
-    // Method search manager by CPF
-    public Manager searchManagerByCPF(String cpf) {
-        for (Manager m : getManagers()) {
-            if (m.getCpf().equals(cpf)) {
-                return m; // return manager found
-            }
+    /**
+     * Commits all pending operations in the transaction.
+     * @param connection The connection activates.
+     */
+    public static void commitTransaction(Connection connection) {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao confirmar (commit) a transação: " + e.getMessage(), e);
         }
-        return null; // return null
+    }
+
+    /**
+     * Rollbacks all pending operations in the transaction.
+     * @param connection The connection activates.
+     */
+    public static void rollbackTransaction(Connection connection) {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao desfazer (rollback) a transação: " +  e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Fecha a conexão com o banco de dados.
+     * @param connection A conexão a ser fechada.
+     */
+    public static void closeConnection(Connection connection) {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao fechar a conexão: " + e.getMessage());
+        }
     }
 }

@@ -1,7 +1,7 @@
 package models;
 
 public abstract class User {
-
+    protected int id;
     protected String name;
     protected String cpf;
     protected String dateOfBirth;
@@ -19,6 +19,8 @@ public abstract class User {
     public User() {}
 
     // Method to return in and set attributes
+    public int getId() {return id;}
+
     public String getName() {return name;}
 
     public String getCpf() {return cpf;}
@@ -26,6 +28,8 @@ public abstract class User {
     public String getDateOfBirth() {return dateOfBirth;}
 
     public String getAddress() {return address;}
+
+    public void setId(int id) {this.id = id;}
 
     public void setName(String name) {this.name = name;}
 
