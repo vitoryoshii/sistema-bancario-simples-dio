@@ -1,11 +1,16 @@
 package models;
 
-import java.util.List;
 import java.util.Scanner;
 
 import util.InputUtils;
-import util.ValidationUtils;
 
+/**
+ * Represents a Manager entity, extending the base properties of a {@code User}.
+ * <p>
+ * This class holds specific login credentials (username and password) and includes
+ * utility methods for capturing user input to create new {@link Client} and
+ * {@code Manager} records.
+ */
 public class Manager extends User {
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -13,33 +18,62 @@ public class Manager extends User {
     private String user;
     private String password;
 
-    // constructor method of the manager object
+    /**
+     * Constructs a Manager object with full personal and login credentials.
+     * * @param name The full name of the manager.
+     * @param cpf The manager's national identification number (CPF).
+     * @param dateOfBirth The manager's date of birth in the format DD/MM/YYYY.
+     * @param address The manager's residential address.
+     * @param user The unique login username for the manager.
+     * @param password The manager's password hash (or plaintext, depending on {@code ManagerDao} implementation).
+     */
     public Manager(String name, String cpf, String dateOfBirth, String address, String user, String password) {
         super(name, cpf, dateOfBirth, address);
         this.user = user;
         this.password = password;
     }
 
-    // constructor method empty
+    /**
+     * Constructs an empty Manager object, typically used as a placeholder or
+     * before capturing user input for a new registration.
+     */
     public Manager() {
         super();
     }
 
-    // Method to return in attributes
+    // --- Getters ---
+
+    /**
+     * Gets the manager's login username.
+     *
+     * @return The username as a {@code String}.
+     */
     public String getUser() {
         return user;
     }
 
+    /**
+     * Gets the manager's stored password (should ideally be a hashed value).
+     *
+     * @return The password string.
+     */
     public String getPassword() {
         return password;
     }
 
-    // Method to create new customers
+    /**
+     * Guides the user through collecting necessary information to create a new {@link Client} record.
+     * <p>
+     * This method acts as a factory, prompting for client name, CPF, birth date, and address
+     * using utilities from {@link InputUtils}.
+     *
+     * @return A newly constructed {@code Client} object with captured information.
+     */
     public Client createClient() {
         // Capture customer information so you can create
         String clientName, clientCPF, clientDateOfBirth, clientAddress;
 
-        System.out.println("CADASTRO DE CLIENTE");
+        System.out.println("\n==== CADASTRO DE CLIENTE ====");
 
         // Call the responsible functions to capture the information
         clientName = InputUtils.getName(scanner);
@@ -50,127 +84,25 @@ public class Manager extends User {
         return new Client(clientName, clientCPF, clientDateOfBirth, clientAddress);
     }
 
-    // Method to assign an account
-    public String activatedAccount(Client client) {
-        System.out.println("ATIVANDO CONTA CLIENTE");
-
-        if (!client.getAccount()) {
-            client.setAccount(true);
-            return "[SUCESSO] - CONTA: " + client.getCpf() + " - " + client.getName() + " - ATIVADA!\n";
-        } else {
-            return "[ERRO] - CONTA: " + client.getCpf() + " - " + client.getName() + " - CONTA JÁ ATIVA!\n";
-        }
-    }
-
-    // Method list users
-    public String listUsers(List<Client> clients) {
-        if (clients.isEmpty()) {
-            return "NENHUM CLIENTE NA LISTA\n";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("===== LISTA DE CLIENTE =====\n");
-
-        for (Client c : clients) {
-            sb.append("NOME: ").append(c.getName()).append("\n")
-                    .append("CPF: ").append(c.getCpf()).append("\n")
-                    .append("DATA DE NASCIMENTO: ").append(c.getDateOfBirth()).append("\n")
-                    .append("ENDEREÇO: ").append(c.getAddress()).append("\n")
-                    .append("---------------------------\n");
-        }
-
-        return sb.toString();
-    }
-
-    // Method list account
-    public String listAccounts(List<Client> clients) {
-        if (clients.isEmpty()) {
-            return "NENHUMA CONTA NA LISTA.";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("===== LISTA DE CONTAS =====\n");
-
-        for (Client c : clients) {
-            sb.append("NOME: ").append(c.getName()).append("\n")
-                    .append("CPF: ").append(c.getCpf()).append("\n")
-                    .append("CONTA ATIVA: ").append(c.getAccount() ? "SIM" : "NÃO").append("\n")
-                    .append("SALDO DA CONTA: ").append(c.getBalance()).append("\n")
-                    .append("---------------------------\n");
-        }
-
-        return sb.toString();
-    }
-
-    // Method that creates when there is no manager on the list
-    public static Manager createManager(String cpf) {
-        String managerName, managerDateOfBirth, managerAddress, managerUser, managerPassword;
-
-        System.out.println("CADASTRO DE GERENTE");
+    /**
+     * Guides the user through collecting all necessary information to create a new {@code Manager} record.
+     * <p>
+     * This method is intended for initial system setup when no manager exists. It collects
+     * personal and login data using static utilities.
+     *
+     * @return A newly constructed {@code Manager} object with captured credentials.
+     */
+    public static Manager createManager() {
+        String managerCPF, managerName, managerDateOfBirth, managerAddress, managerUser, managerPassword;
 
         // Call the responsible functions to capture the information
+        managerCPF = InputUtils.getValidCPF(scanner);
         managerName = InputUtils.getName(scanner);
         managerDateOfBirth = InputUtils.getDateOfBirth(scanner);
         managerAddress = InputUtils.getAddress(scanner);
         managerUser = InputUtils.getUser(scanner);
         managerPassword = InputUtils.getPassword(scanner);
 
-        return new Manager(managerName, cpf, managerDateOfBirth, managerAddress, managerUser, managerPassword);
-    }
-
-    public void updateRegistration(Client client) {
-        scanner.useDelimiter("\\n");
-
-        System.out.println("\nATUALIZAÇÃO CADASTRAL");
-
-        if (client == null) {
-            System.out.println("[ERRO] - CPF NÃO ENCONTRADO!\n");
-            return;
-        }
-
-        // Update name or maintains the current
-        System.out.println("NOME ATUAL: [" + client.getName() + "] - ENTER PARA PULAR ALTERAÇÃO");
-        String nameUpdate = scanner.next();
-        if (!nameUpdate.isBlank()) {
-            if (ValidationUtils.isValidName(nameUpdate)) {
-                client.setName(nameUpdate);
-            } else {
-                System.out.println("[ERRO] - NOME INVÁLIDO, MANTENDO O VALOR ANTIGO.\n");
-            }
-        }
-
-        // Update date birthed or maintains
-        System.out.println("DATA ATUAL: [" + client.getDateOfBirth() + "] - ENTER PARA PULAR ALTERAÇÃO");
-        String dateBirthedUpdate = scanner.next();
-        if (!dateBirthedUpdate.isBlank()) {
-            if (ValidationUtils.isValidDate(dateBirthedUpdate)) {
-                client.setDateOfBirth(dateBirthedUpdate);
-            } else {
-                System.out.println("[ERRO] - DATA INVÁLIDA, MANTENDO O VALOR ANTIGO.\n");
-            }
-        }
-
-        // Update address or maintains the current
-        System.out.println("ENDEREÇO ATUAL: [" + client.getAddress() + "] - ENTER PARA PULAR ALTERAÇÃO");
-        String addressUpdate = scanner.next();
-        if (!addressUpdate.isBlank()) {
-            if (ValidationUtils.isValidAddress(addressUpdate)) {
-                client.setAddress(addressUpdate);
-            } else {
-                System.out.println("[ERRO] - ENDEREÇO INVÁLIDO, MANTENDO O VALOR ANTIGO.\n");
-            }
-        }
-
-        // String the updated data
-        System.out.println("\n[SUCESSO] - DADOS ATUALIZADO!\n");
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("---------------------------\n")
-                .append("NOME: ").append(client.getName()).append("\n")
-                .append("CPF: ").append(client.getCpf()).append("\n")
-                .append("DATA DE NASCIMENTO: ").append(client.getDateOfBirth()).append("\n")
-                .append("ENDEREÇO: ").append(client.getAddress()).append("\n")
-                .append("---------------------------\n");
-        System.out.println(sb);
+        return new Manager(managerName, managerCPF, managerDateOfBirth, managerAddress, managerUser, managerPassword);
     }
 }
