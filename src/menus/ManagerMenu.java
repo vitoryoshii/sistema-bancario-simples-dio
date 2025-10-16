@@ -3,7 +3,6 @@ package menus;
 import dao.ClientDao;
 import models.Client;
 import models.Manager;
-import util.BankRepository;
 import util.InputUtils;
 import util.ValidationUtils;
 
@@ -12,16 +11,35 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Represents the dedicated administrative menu interface for a logged-in bank manager.
+ * <p>
+ * This class implements the {@code Menu} interface and provides functionality for
+ * managing client accounts, including creation, activation/deactivation, listing,
+ * and updating registration information.
+ */
 public class ManagerMenu implements Menu{
     private Manager manager;
     private Scanner scanner;
     private ClientDao clientDAO = new ClientDao();
 
+    /**
+     * Constructs the Manager Menu, setting the context for the logged-in manager.
+     *
+     * @param manager The {@link Manager} object representing the authenticated user.
+     * @param scanner The {@code Scanner} object for reading user input.
+     */
     public ManagerMenu(Manager manager, Scanner scanner) {
         this.manager = manager;
         this.scanner = scanner;
     }
 
+    /**
+     * Displays the manager menu options and handles the core interaction loop.
+     * <p>
+     * Options include: Create Client, Activate/Deactivate Account, List Clients,
+     * List Accounts, Update Registration Info, and Log Out (0).
+     */
     @Override
     public void exibir() {
         int option;
@@ -52,16 +70,28 @@ public class ManagerMenu implements Menu{
         } while (option != 0);
     }
 
+    /**
+     * Initiates the account creation process for a new {@link Client}.
+     * <p>
+     * Gathers client details (via {@code Manager.createClient()}) and attempts to
+     * persist the new client to the database via {@link ClientDao#insertClient(Client)}.
+     */
     public void createClient() {
         Client newClient = manager.createClient();
 
         if (clientDAO.insertClient(newClient)) {
-            System.out.println("\n[SUCESSO] - Cliente " + newClient.getName() + " cadastrado com sucesso!");
+            System.out.println("\n[SUCESSO] - CLIENTE " + newClient.getName() + " CADASTRADO COM SUCESSO!");
         } else {
-            System.out.println("[ERRO] - Cliente não cadastrado!");
+            System.out.println("[ERRO] - CLIENTE NÃO CADASTRADO!");
         }
     }
 
+    /**
+     * Prompts for a client's CPF and toggles the activation status of their account.
+     * <p>
+     * The new status is the opposite of the current status. The update is performed
+     * using {@link ClientDao#updateAccountStatus(String, boolean)}.
+     */
     private void activateClientAccount() {
         System.out.println("\n=== ATIVAÇÃO/DESATIVAÇÃO DE CONTA ===");
         InputUtils.clearBuffer(scanner);
@@ -82,23 +112,29 @@ public class ManagerMenu implements Menu{
 
             if (clientDAO.updateAccountStatus(client.getCpf(), newStatus)) {
                 client.setAccount(newStatus);
-                System.out.println("[SUCESSO] - Conta do cliente " + client.getName() + " AGORA está " + statusText + ".\n");
+                System.out.println("[SUCESSO] - CONTA DO CLIENTE " + client.getName() + " AGORA ESTÁ " + statusText + ".\n");
             } else {
-                System.out.println("[ERRO] - Falha ao atualizar status no BD.");
+                System.out.println("[ERRO] - FALHA AO ATUALIZAR STATUS DO BD.");
             }
 
         } else {
-            System.out.println("[ERRO] - Cliente com CPF " + cpf + " não encontrado.");
+            System.out.println("[ERRO] - CLIENTE COM CPF: " + cpf + " NÃO ENCONTRADO.");
         }
     }
 
+    /**
+     * Retrieves all client registration records from the database and prints a formatted list
+     * containing name, CPF, birth_date, and address.
+     * <p>
+     * Uses {@link ClientDao#findAllClients()} to fetch the data.
+     */
     private void listAllClients() {
         System.out.println("\n=== LISTA DE CLIENTES ===");
 
         List<Client> clients = clientDAO.findAllClients();
 
         if (clients.isEmpty()) {
-            System.out.println("[INFO] - Nenhum cliente cadastrado.");
+            System.out.println("[INFO] - NENHUM CLIENTE CADASTRADO.");
             return;
         }
 
@@ -115,13 +151,19 @@ public class ManagerMenu implements Menu{
         System.out.println(sb);
     }
 
+    /**
+     * Retrieves all client account records from the database and prints a formatted list
+     * containing name, CPF, account status, and current balance.
+     * <p>
+     * Uses {@link ClientDao#findAllClients()} to fetch the data.
+     */
     private void listAllAccounts() {
         System.out.println("\n=== LISTA DE CONTAS ===");
 
         List<Client> clients = clientDAO.findAllClients();
 
         if (clients.isEmpty()) {
-            System.out.println("[INFO] - Nenhuma conta cadastrado.");
+            System.out.println("[INFO] - NENHUMA CONTA CADASTRADA.");
             return;
         }
 
@@ -138,6 +180,13 @@ public class ManagerMenu implements Menu{
         System.out.println(sb);
     }
 
+    /**
+     * Manages the flow for updating a client's registration information (name, birth date, address).
+     * <p>
+     * Prompts the manager for the client's CPF, fetches the current data, and allows for optional
+     * updates to individual fields with validation (via {@link ValidationUtils}).
+     * Persists changes using {@link ClientDao#updateClientInfo(Client)}.
+     */
     public void updateClient() {
         System.out.println("\nATUALIZAÇÃO CADASTRAL");
         scanner.nextLine();
@@ -153,7 +202,7 @@ public class ManagerMenu implements Menu{
         }
 
         if (!clientOpt.isPresent()) {
-            System.out.println("[ERRO] - Cliente com CPF " + cpf + " não encontrado.");
+            System.out.println("[ERRO] - CLIENTE COM CPF: " + cpf + " NÃO ENCONTRADO.");
             return;
         }
 
@@ -163,7 +212,7 @@ public class ManagerMenu implements Menu{
         System.out.println("\nCLIENTE ENCONTRADO: " + client.getName());
         System.out.println("----------------------------------------");
 
-        // ==== NOME ====
+        // ==== NAME ====
         System.out.println("NOME ATUAL: [" + client.getName() + "]");
         System.out.print("DIGITE NOVO NOME (ou ENTER para manter): ");
         String newName = scanner.nextLine().trim();
@@ -172,11 +221,11 @@ public class ManagerMenu implements Menu{
                 client.setName(newName);
                 updated = true;
             } else {
-                System.out.println("[AVISO] - Nome inválido. Mantendo o valor atual.");
+                System.out.println("[AVISO] - NOME INVÁLIDO. Mantendo o valor atual.");
             }
         }
 
-        // ==== DATA DE NASCIMENTO ====
+        // ==== BIRTH DATE ====
         System.out.println("DATA NASC. ATUAL: [" + client.getDateOfBirth() + "]");
         System.out.print("DIGITE NOVA DATA (DD-MM-YYYY) (ou ENTER para manter): ");
         String newDate = scanner.nextLine().trim();
@@ -185,11 +234,11 @@ public class ManagerMenu implements Menu{
                 client.setDateOfBirth(newDate);
                 updated = true;
             } else {
-                System.out.println("[AVISO] - Data inválida. Mantendo o valor atual.");
+                System.out.println("[AVISO] - DATA INVÁLIDA. Mantendo o valor atual.");
             }
         }
 
-        // ==== ENDEREÇO ====
+        // ==== ADDRESS ====
         System.out.println("ENDEREÇO ATUAL: [" + client.getAddress() + "]");
         System.out.print("DIGITE NOVO ENDEREÇO (ou ENTER para manter): ");
         String newAddress = scanner.nextLine().trim();
@@ -198,22 +247,22 @@ public class ManagerMenu implements Menu{
                 client.setAddress(newAddress);
                 updated = true;
             } else {
-                System.out.println("[AVISO] - Endereço inválido. Mantendo o valor atual.");
+                System.out.println("[AVISO] - ENDEREÇO INVÁLIDO. Mantendo o valor atual.");
             }
         }
 
         // ==== SALVAR ====
         if (updated) {
             if (clientDAO.updateClientInfo(client)) {
-                System.out.println("\n[SUCESSO] - Dados do cliente atualizados no sistema!");
+                System.out.println("\n[SUCESSO] - DADOS DO CLIENTE ATUALIZADO NO SISTEMA!");
                 System.out.println("Novo Nome: " + client.getName());
                 System.out.println("Nova Data de Nascimento: " + client.getDateOfBirth());
                 System.out.println("Novo Endereço: " + client.getAddress());
             } else {
-                System.out.println("\n[ERRO] - Falha ao salvar no banco de dados.");
+                System.out.println("\n[ERRO] - FALHA AO SALVAR NO BANCO DE DADOS.");
             }
         } else {
-            System.out.println("\n[INFO] - Nenhuma alteração válida foi realizada. Dados mantidos.");
+            System.out.println("\n[INFO] - NENHUMA ATUALIZAÇÃO VALIDA FOI REALIZADA. DADOS MANTIDOS!");
         }
     }
 

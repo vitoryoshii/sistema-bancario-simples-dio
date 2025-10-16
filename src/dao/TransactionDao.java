@@ -9,17 +9,22 @@ import java.util.List;
 
 /**
  * Data Access Object (DAO) for the Transaction entity.
- * Responsible for inserting new records and searching transaction history.
+ * Responsible for **inserting** new transaction records and **searching** the transaction history (extract).
  */
 public class TransactionDao {
     /**
      * Inserts a new transaction record into the Oracle database.
-     * * @param connection The JDBC connection (must come from BankRepository.getConnection() and have autoCommit=false).
-     * @param transaction The Transaction object to save.
-     * @throws SQLException If an error occurs while executing SQL.
+     * <p>
+     * This method is designed to be part of a larger, **atomic database transaction** * (e.g., a deposit or withdrawal). It does **not** manage the connection lifecycle
+     * (opening/closing) or transaction control (commit/rollback).
+     *
+     * @param connection The active JDBC connection. It must have {@code autoCommit=false}
+     * and be managed by the calling method (e.g., in {@code ClientDao.deposit()}).
+     * @param transaction The {@code Transaction} object to save, containing the client ID, type, and value.
+     * @throws SQLException If an error occurs while executing the SQL statement (e.g., connection issue).
      */
     public void insertTransaction(Connection connection, Transaction transaction) throws SQLException {
-        String sql = "INSERT INTO transaction (id_client, type, value) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO TRANSACTION (ID_CLIENT, TYPE, VALUE) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, transaction.getIdClient());
@@ -31,9 +36,13 @@ public class TransactionDao {
     }
 
     /**
-     * Fetches all transactions for a specific customer from the database.
-     * * @param idClient The customer ID to fetch the statement from.
-     * @return A list of Transaction objects.
+     * Fetches all transactions for a specific customer from the database, effectively creating an account statement.
+     * <p>
+     * The results are ordered by {@code transaction_date} in **descending** order (most recent first).
+     *
+     * @param idClient The ID of the customer to fetch the statement from.
+     * @return A {@code List<Transaction>} containing the customer's transaction history.
+     * Returns an **empty list** if no transactions are found or a {@code SQLException} occurs.
      */
     public List<Transaction> getExtractByClientId(int idClient) {
         Connection connection = null;
@@ -41,10 +50,10 @@ public class TransactionDao {
         ResultSet rs = null;
         List<Transaction> extract = new ArrayList<>();
 
-        String sql = "SELECT id_transaction, id_client, type, value, transaction_date " +
-                     "FROM transaction " +
-                     "WHERE id_client = ? " +
-                     "ORDER BY transaction_date DESC";
+        String sql = "SELECT ID_TRANSACTION, ID_CLIENT, TYPE, VALUE, TRANSACTION_DATE " +
+                     "FROM TRANSACTION " +
+                     "WHERE ID_CLIENT = ? " +
+                     "ORDER BY TRANSACTION_DATE DESC";
 
         try {
             connection = BankRepository.getConnection();
