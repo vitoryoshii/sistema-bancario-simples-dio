@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/sistema-bancario-simples.iml" filepath="$PROJECT_DIR$/sistema-bancario-simples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/sistema-bancario-simples.iml" filepath="$PROJECT_DIR$/lib/sistema-bancario-simples.iml" />
     </modules>
   </component>
 </project>
