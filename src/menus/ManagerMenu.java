@@ -257,7 +257,7 @@ public class ManagerMenu implements Menu{
                 System.out.println("\n[SUCESSO] - DADOS DO CLIENTE ATUALIZADO NO SISTEMA!\n");
                 System.out.println("Novo Nome: " + client.getName());
                 System.out.println("Nova Data de Nascimento: " + client.getDateOfBirth());
-                System.out.println("Novo Endereço: " + client.getAddress());
+                System.out.println("Novo Endereço: " + client.getAddress() + "\n");
             } else {
                 System.out.println("\n[ERRO] - FALHA AO SALVAR NO BANCO DE DADOS.\n");
             }

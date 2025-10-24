@@ -306,10 +306,10 @@ public class ClientDao {
                 }
 
                 try {
-                    if (dateStr.contains("-")) {
-                        localDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    } else {
+                    if (dateStr.contains("/")) {
                         localDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    } else if (dateStr.contains("-")) {
+                        localDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                     }
                 } catch (Exception e) {
                     System.err.println("[AVISO] - Formato de data inválido: " + dateStr);
